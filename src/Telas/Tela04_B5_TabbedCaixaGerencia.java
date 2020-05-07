@@ -6,6 +6,9 @@
 package Telas;
 
 import Telas.Tela03_B_HomeGerencia;
+import javax.swing.table.DefaultTableModel;
+import model.Produtos;
+import model.ProdutosDao;
 
 /**
  *
@@ -35,8 +38,8 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         voltarProdutosAtendimento = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaProd = new javax.swing.JTable();
-        pesquisaProd = new javax.swing.JTextField();
-        btnPesquisarProd = new javax.swing.JButton();
+        pesquisaProd1 = new javax.swing.JTextField();
+        btnPesquisarProd1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         voltarCaixa = new javax.swing.JButton();
@@ -113,39 +116,39 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         tabelaProd.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabelaProd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código I", "Código II", "Nome", "Descrição", "Validade", "Categoria", "Valor", "Qtd.", "Fornecedor"
+                "Produto", "Fornecedor", "Nome", "Descrição", "Validade", "Categoria", "Valor", "Qtd."
             }
         ));
         tabelaProd.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(tabelaProd);
 
-        pesquisaProd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        pesquisaProd1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        btnPesquisarProd.setBackground(new java.awt.Color(30, 0, 45));
-        btnPesquisarProd.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnPesquisarProd.setForeground(new java.awt.Color(255, 255, 255));
-        btnPesquisarProd.setText("Pesquisar");
-        btnPesquisarProd.setBorderPainted(false);
-        btnPesquisarProd.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisarProd1.setBackground(new java.awt.Color(30, 0, 45));
+        btnPesquisarProd1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnPesquisarProd1.setForeground(new java.awt.Color(255, 255, 255));
+        btnPesquisarProd1.setText("Pesquisar");
+        btnPesquisarProd1.setBorderPainted(false);
+        btnPesquisarProd1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisarProdActionPerformed(evt);
+                btnPesquisarProd1ActionPerformed(evt);
             }
         });
 
@@ -160,29 +163,29 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(pesquisaProd, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pesquisaProd1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPesquisarProd))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPesquisarProd1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 270, Short.MAX_VALUE)
-                        .addComponent(voltarProdutosAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
+                        .addComponent(voltarProdutosAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnPesquisarProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pesquisaProd, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnPesquisarProd1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pesquisaProd1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Consulta", jPanel3);
@@ -672,10 +675,6 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_voltarProdutosAtendimentoActionPerformed
 
-    private void btnPesquisarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarProdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPesquisarProdActionPerformed
-
     private void voltarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarCaixaActionPerformed
         Tela03_B_HomeGerencia telaHomeGerencia = new Tela03_B_HomeGerencia();
         telaHomeGerencia.setVisible(true);
@@ -723,6 +722,18 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     private void finalizarPagCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarPagCaixaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_finalizarPagCaixaActionPerformed
+
+    private void btnPesquisarProd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarProd1ActionPerformed
+        DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel();
+        tabelaProdutos.setNumRows(0);
+        ProdutosDao dao = new ProdutosDao();
+        for (Produtos c : dao.getContatos()) {
+            tabelaProdutos.addRow(new Object[]{c.getcod_prod(), c.getcod_for(),
+                c.getnome(), c.getdescricao(), c.getdata_validade(),
+                c.getcategoria(), c.getvalor(), c.getquantidade()
+            });
+        }
+    }//GEN-LAST:event_btnPesquisarProd1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -888,7 +899,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adicionarCaixa;
-    private javax.swing.JButton btnPesquisarProd;
+    private javax.swing.JButton btnPesquisarProd1;
     private javax.swing.JButton cancelarCaixa;
     private javax.swing.JTextField codCaixa;
     private javax.swing.JButton creditoCaixa;
@@ -919,7 +930,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField pesquisaProd;
+    private javax.swing.JTextField pesquisaProd1;
     private javax.swing.JTextField pesquisarCaixa;
     private javax.swing.JButton pesquisarCaixaBtn;
     private javax.swing.JTextField qtdCaixa;
