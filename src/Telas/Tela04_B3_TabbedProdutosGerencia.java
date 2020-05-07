@@ -6,6 +6,7 @@
 package Telas;
 
 import Telas.Tela03_B_HomeGerencia;
+import javax.swing.table.DefaultTableModel;
 import model.Produtos;
 import model.ProdutosDao;
 
@@ -98,24 +99,24 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         tabelaProd.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabelaProd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código I", "Código II", "Nome", "Descrição", "Validade", "Categoria", "Valor", "Qtd.", "Fornecedor"
+                "Produto", "Fornecedor", "Nome", "Descrição", "Validade", "Categoria", "Valor", "Qtd."
             }
         ));
         tabelaProd.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -461,7 +462,15 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_excluirCadProdActionPerformed
 
     private void btnPesquisarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarProdActionPerformed
-    
+        DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel(); 
+        tabelaProdutos.setNumRows(0);
+        ProdutosDao dao = new ProdutosDao(); 
+        for (Produtos c : dao.getContatos()) {
+            tabelaProdutos.addRow(new Object[]{c.getcod_prod(), c.getcod_for(), 
+                c.getnome(), c.getdescricao(), c.getdata_validade(), 
+                c.getcategoria(), c.getvalor(), c.getquantidade()
+            });
+        }
     }//GEN-LAST:event_btnPesquisarProdActionPerformed
 
     private void codCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codCadProdActionPerformed

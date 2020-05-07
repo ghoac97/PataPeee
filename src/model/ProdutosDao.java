@@ -91,36 +91,33 @@ public class ProdutosDao {
         }
     }
 
-     public ArrayList<Produtos> getContatos(){
+    public ArrayList<Produtos> getContatos(){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        ArrayList<Produtos> Produto = new ArrayList<Produtos>();
+        ArrayList<Produtos> produtos = new ArrayList<Produtos>();
         try {
-            
             conn = connectionFactory.getConnection();
-            stmt = conn.prepareStatement("select * from Produtos");
+            stmt = conn.prepareStatement("select * from produtos");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Produtos Produtos = new Produtos(); 
-                
-                Produtos.setcod_prod(Integer.parseInt(rs.getString("Código I")));
-                Produtos.setcod_for(Integer.parseInt(rs.getString("Código II"))); 
-                Produtos.setnome(rs.getString("Nome"));
-                Produtos.setdescricao(rs.getString("Descrição"));
-                Produtos.setdata_validade(rs.getString("Validade"));
-                Produtos.setcategoria(rs.getString("Categoria"));
-                Produtos.setvalor(Integer.parseInt(rs.getString("Valor")));
-                Produtos.setquantidade(Integer.parseInt(rs.getString("Qtd.")));
-
-                Produto.add(Produtos);
+                Produtos produto = new Produtos(); 
+                produto.setcod_prod(rs.getInt("cod_prod"));
+                produto.setcod_for(rs.getInt("cod_for"));
+                produto.setnome(rs.getString("nome"));
+                produto.setdescricao(rs.getString("descricao"));
+                produto.setdata_validade(rs.getString("data_validade"));
+                produto.setcategoria(rs.getString("categoria"));
+                produto.setvalor(rs.getInt("valor"));
+                produto.setquantidade(rs.getInt("quantidade"));
+                produtos.add(produto);
             }
             connectionFactory.closeConnection(conn, stmt, rs);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
         }
-        return Produto;
-    }
+        return produtos;
+    }    
 
 }
 
