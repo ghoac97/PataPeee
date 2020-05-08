@@ -28,7 +28,7 @@ public class Clientes {
         return cod_cli;
     }
 
-    public void setcod_produto(Integer cod_cli) {
+    public void setcod_cli(Integer cod_cli) {
         this.cod_cli = cod_cli;
     }
 

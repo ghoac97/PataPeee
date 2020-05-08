@@ -55,7 +55,7 @@ public class ProdutosDao {
             stmt.setInt(1, p.getcod_prod());
 
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+            JOptionPane.showMessageDialog(null, "Excluído com sucesso");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);

@@ -42,10 +42,10 @@ public class FornecedoresDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from Fornecedores where cod_for=?;");
-            stmt.setInt(1, p.getcod_for());
+            stmt = con.prepareStatement("delete from Fornecedores where cpf_cnpj=?;");
+            stmt.setString(1, p.getcpf_cnpj());
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+            JOptionPane.showMessageDialog(null, "Excluído com sucesso");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -81,6 +81,38 @@ public class FornecedoresDao {
         } finally {
             connectionFactory.closeConnection(con, stmt);
         }
+    }
+    
+    public ArrayList<Fornecedores> getContatos(){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Fornecedores> fornecedores = new ArrayList<Fornecedores>();
+        try {
+            conn = connectionFactory.getConnection();
+            stmt = conn.prepareStatement("select * from fornecedores");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Fornecedores fornecedor = new Fornecedores(); 
+                fornecedor.setcod_for(rs.getInt("cod_for"));
+                fornecedor.setnome(rs.getString("nome"));
+                fornecedor.setcpf_cnpj(rs.getString("cpf_cnpj"));
+                fornecedor.setdata_cadastro(rs.getString("data_cadastro"));
+                fornecedor.settipo(rs.getString("tipo"));
+                fornecedor.setuf(rs.getString("uf"));
+                fornecedor.setcidade(rs.getString("cidade"));
+                fornecedor.setendereco(rs.getString("endereco"));
+                fornecedor.setcep(rs.getString("cep"));
+                fornecedor.setbairro(rs.getString("bairro"));                
+                fornecedor.settelefone(rs.getString("telefone"));
+                fornecedor.setcelular(rs.getString("celular"));
+                fornecedores.add(fornecedor);
+            }
+            connectionFactory.closeConnection(conn, stmt, rs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
+        }
+        return fornecedores;
     }
 
 }

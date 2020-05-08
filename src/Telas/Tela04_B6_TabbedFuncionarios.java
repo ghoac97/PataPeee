@@ -341,7 +341,7 @@ public class Tela04_B6_TabbedFuncionarios extends javax.swing.JFrame {
         jLabel10.setText("CPF");
 
         try {
-            nascCadFunc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            nascCadFunc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####/##/##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

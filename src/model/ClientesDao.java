@@ -54,7 +54,7 @@ public class ClientesDao {
             stmt.setString(1,p.getcpf());
 
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+            JOptionPane.showMessageDialog(null, "Excluído com sucesso");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -88,6 +88,36 @@ public class ClientesDao {
         } finally {
             connectionFactory.closeConnection(con, stmt);
         }
+    }
+    
+    public ArrayList<Clientes> getContatos(){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Clientes> clientes = new ArrayList<Clientes>();
+        try {
+            conn = connectionFactory.getConnection();
+            stmt = conn.prepareStatement("select * from clientes");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Clientes cliente = new Clientes(); 
+                cliente.setcod_cli(rs.getInt("cod_cli"));
+                cliente.setnome(rs.getString("nome"));
+                cliente.setcpf(rs.getString("cpf"));
+                cliente.setdata_nascimento(rs.getString("data_nascimento"));
+                cliente.settelefone(rs.getString("telefone"));                
+                cliente.setcelular(rs.getString("celular"));
+                cliente.setendereco(rs.getString("endereco"));
+                cliente.setcep(rs.getString("cep"));
+                cliente.setbairro(rs.getString("bairro"));
+                cliente.setemail(rs.getString("email"));
+                clientes.add(cliente);
+            }
+            connectionFactory.closeConnection(conn, stmt, rs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
+        }
+        return clientes;
     }
 
 }

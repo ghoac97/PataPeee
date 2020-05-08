@@ -6,6 +6,7 @@
 package Telas;
 
 import Telas.Tela03_B_HomeGerencia;
+import javax.swing.table.DefaultTableModel;
 import model.Fornecedores;
 import model.FornecedoresDao;
 
@@ -108,24 +109,24 @@ public class Tela04_B2_TabbedFornecedores extends javax.swing.JFrame {
         tabelaForn.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabelaForn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Nome", "CNPJ/CPF", "Data Cad.", "Tipo", "UF", "Cidade", "Endereço", "Nº", "CEP", "Bairro", "Comp.", "Telefone", "Celular"
+                "Código", "Nome", "CNPJ/CPF", "Data Cad.", "Tipo", "UF", "Cidade", "Endereço", "CEP", "Bairro", "Telefone", "Celular"
             }
         ));
         tabelaForn.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -499,12 +500,11 @@ public class Tela04_B2_TabbedFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_tipoCadFornActionPerformed
 
     private void excluirCadFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirCadFornActionPerformed
-        Fornecedores Fornecedor = new Fornecedores();
+        Fornecedores Fornecedores = new Fornecedores();
         FornecedoresDao fdao = new FornecedoresDao();
-        Fornecedor.setcpf_cnpj(cnpjCadForn.getText());
+        Fornecedores.setcpf_cnpj(cnpjCadForn.getText());
         
-        fdao.delete(Fornecedor);
-        
+        fdao.delete(Fornecedores);
     }//GEN-LAST:event_excluirCadFornActionPerformed
 
     private void voltarCadFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarCadFornActionPerformed
@@ -554,7 +554,16 @@ public class Tela04_B2_TabbedFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_inserirCadFornActionPerformed
 
     private void btnPesquisarFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarFornActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel tabelaFornecedores = (DefaultTableModel) tabelaForn.getModel();
+        tabelaFornecedores.setNumRows(0);
+        FornecedoresDao dao = new FornecedoresDao();
+        for (Fornecedores c : dao.getContatos()) {
+            tabelaFornecedores.addRow(new Object[]{c.getcod_for(), c.getnome(),
+                c.getcpf_cnpj(), c.getdata_cadastro(), c.gettipo(),
+                c.getuf(), c.getcidade(), c.getendereco(), c.getcep(), 
+                c.getbairro(), c.gettelefone(), c.getcelular()
+            });
+        }
     }//GEN-LAST:event_btnPesquisarFornActionPerformed
 
     /**

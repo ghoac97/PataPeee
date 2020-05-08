@@ -166,8 +166,8 @@ public class Tela03_A_HomeAtendimento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void servicosAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicosAtendimentoActionPerformed
-        Tela04_A2_TabbedServicosAtendimento telaTabbedServicosAtendimento = new Tela04_A2_TabbedServicosAtendimento();
-        telaTabbedServicosAtendimento.setVisible(true);
+        Tela04_A2_TabbedServicosAtendimento2 telaTabbedServicosAtendimento2 = new Tela04_A2_TabbedServicosAtendimento2();
+        telaTabbedServicosAtendimento2.setVisible(true);
         dispose();
     }//GEN-LAST:event_servicosAtendimentoActionPerformed
 

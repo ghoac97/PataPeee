@@ -5,6 +5,7 @@
  */
 package Telas;
 
+import javax.swing.table.DefaultTableModel;
 import model.Clientes;
 import model.ClientesDao;
 
@@ -138,24 +139,24 @@ public class Tela04_B1_TabbedClientesGerencia extends javax.swing.JFrame {
         tabelaCli.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabelaCli.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Nome", "CPF", "Data Nasc.", "Telefone", "Celular", "Endereço", "Nº", "CEP", "Bairro", "Comp.", "E-mail", "Nome Pet", "Espécie", "Raça", "Porte", "Sexo", "Idade", "Cor"
+                "Código", "Nome", "CPF", "Data Nasc.", "Telefone", "Celular", "Endereço", "CEP", "Bairro", "E-mail"
             }
         ));
         tabelaCli.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -768,7 +769,15 @@ public class Tela04_B1_TabbedClientesGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_especieCadPetActionPerformed
 
     private void btnPesquisarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCliActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel tabelaClientes = (DefaultTableModel) tabelaCli.getModel(); 
+        tabelaClientes.setNumRows(0);
+        ClientesDao dao = new ClientesDao(); 
+        for (Clientes c : dao.getContatos()) {
+            tabelaClientes.addRow(new Object[]{c.getcod_cli(), c.getnome(), 
+                c.getcpf(), c.getdata_nascimento(), c.gettelefone(), c.getcelular(), 
+                c.getendereco(), c.getcep(), c.getbairro(), c.getemail()
+            });
+        }
     }//GEN-LAST:event_btnPesquisarCliActionPerformed
 
     private void porteAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porteAgendServActionPerformed
