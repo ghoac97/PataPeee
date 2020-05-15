@@ -52,11 +52,10 @@ public class Tela04_A2_TabbedServicosAtendimento2 extends javax.swing.JFrame {
         horarioAgendServ = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
         totalAgendServ = new javax.swing.JTextField();
-        porteAgendServ = new javax.swing.JComboBox<>();
+        porteAgendServ = new javax.swing.JComboBox<String>();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaServicosAgend = new javax.swing.JList<>();
-        dataAgendServ = new com.toedter.calendar.JDateChooser();
+        listaServicosAgend = new javax.swing.JList<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -262,8 +261,7 @@ public class Tela04_A2_TabbedServicosAtendimento2 extends javax.swing.JFrame {
         });
 
         porteAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        porteAgendServ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P", "M", "G" }));
-        porteAgendServ.setOpaque(false);
+        porteAgendServ.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "P", "M", "G" }));
         porteAgendServ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 porteAgendServActionPerformed(evt);
@@ -276,18 +274,13 @@ public class Tela04_A2_TabbedServicosAtendimento2 extends javax.swing.JFrame {
 
         listaServicosAgend.setBackground(new java.awt.Color(239, 230, 244));
         listaServicosAgend.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        listaServicosAgend.setModel(new javax.swing.AbstractListModel<String>() {
+        listaServicosAgend.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Banho", " ", "Tosa", " ", "Tosa higiênica", " ", "Escovação de dentes", " ", "Corte de unhas" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         listaServicosAgend.setOpaque(false);
         jScrollPane1.setViewportView(listaServicosAgend);
-
-        dataAgendServ.setBackground(new java.awt.Color(255, 255, 255));
-        dataAgendServ.setDateFormatString("yyyy/MM/dd");
-        dataAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        dataAgendServ.setOpaque(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -308,10 +301,8 @@ public class Tela04_A2_TabbedServicosAtendimento2 extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(dataAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)
+                                .addGap(132, 132, 132)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
                                     .addComponent(horarioAgendServ)))
@@ -363,9 +354,7 @@ public class Tela04_A2_TabbedServicosAtendimento2 extends javax.swing.JFrame {
                             .addComponent(jLabel12)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(horarioAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dataAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(horarioAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -536,7 +525,6 @@ public class Tela04_A2_TabbedServicosAtendimento2 extends javax.swing.JFrame {
     private javax.swing.JButton btnPesquisarAgend;
     private javax.swing.JTextField clienteAgendServ;
     private javax.swing.JFormattedTextField cpfAgendServ;
-    private com.toedter.calendar.JDateChooser dataAgendServ;
     private javax.swing.JFormattedTextField horarioAgendServ;
     private javax.swing.JButton inserirAgendServ;
     private javax.swing.JLabel jLabel1;
