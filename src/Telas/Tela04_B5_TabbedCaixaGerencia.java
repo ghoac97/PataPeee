@@ -19,9 +19,23 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     /**
      * Creates new form TabbedClientesGerencia
      */
+    
     public Tela04_B5_TabbedCaixaGerencia() {
         initComponents();
     }
+    
+    public void ValorFinal() {
+    try {
+        double ValorFinal = 0;
+        for (int i = 0; i < tabelaCaixa.getRowCount(); i++) {
+            ValorFinal += Double.parseDouble(tabelaCaixa.getValueAt(i, 2).toString());
+            totalCaixa.setText(String.valueOf(ValorFinal));
+        }
+    } catch (NumberFormatException e) {
+        System.out.println("Erro ao somar: " + e.getMessage());
+    }
+}
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -230,29 +244,9 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         tabelaCaixa.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         tabelaCaixa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
             },
             new String [] {
-                "Qtd.", "Item", "Valor"
+                "Cod", "Item.", "Valor", "Qtd."
             }
         ));
         jScrollPane2.setViewportView(tabelaCaixa);
@@ -260,6 +254,11 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         totalCaixa.setBackground(new java.awt.Color(222, 213, 226));
         totalCaixa.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         totalCaixa.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        totalCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totalCaixaActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
@@ -566,6 +565,11 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         valorPagCaixa.setBackground(new java.awt.Color(222, 213, 226));
         valorPagCaixa.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         valorPagCaixa.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        valorPagCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valorPagCaixaActionPerformed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(51, 51, 51));
@@ -574,6 +578,11 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         trocoCaixa.setBackground(new java.awt.Color(222, 213, 226));
         trocoCaixa.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         trocoCaixa.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        trocoCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trocoCaixaActionPerformed(evt);
+            }
+        });
 
         finalizarPagCaixa.setBackground(new java.awt.Color(30, 0, 45));
         finalizarPagCaixa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -686,15 +695,34 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_pesquisarCaixaBtnActionPerformed
 
     private void adicionarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarCaixaActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel modelo = (DefaultTableModel) tabelaCaixa.getModel();
+        modelo.addRow(new Object[]{codCaixa.getText(), itemCaixa.getText(), valorCaixa.getText(), qtdCaixa.getText()});
+        //int x = tabelaCaixa.get();
+        ValorFinal();
     }//GEN-LAST:event_adicionarCaixaActionPerformed
 
     private void excluirCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirCaixaActionPerformed
-        // TODO add your handling code here:
+        int x = tabelaCaixa.getSelectedRow();
+        if (x != 1) {
+            DefaultTableModel modelo = (DefaultTableModel) tabelaCaixa.getModel();
+            modelo.removeRow(x);
+        } else {
+            
+        }
+        ValorFinal();
+        /*
+        ValorFinal();
+        //float semproduto = Float.parseFloat(tabelaCaixa.getValueAt(0, 2).toString());
+        //System.out.println(semproduto);
+        if(Float.parseFloat(tabelaCaixa.getValueAt(0, 2).toString()) <){
+           totalCaixa.setText(String.valueOf(0.0));
+        }
+        */
     }//GEN-LAST:event_excluirCaixaActionPerformed
 
     private void finalizarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarCaixaActionPerformed
-        // TODO add your handling code here:
+        totalPagCaixa.setText(totalCaixa.getText());
+       
     }//GEN-LAST:event_finalizarCaixaActionPerformed
 
     private void cancelarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCaixaActionPerformed
@@ -708,15 +736,20 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarPagamentoCaixaActionPerformed
 
     private void dinheiroCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dinheiroCaixaActionPerformed
-        // TODO add your handling code here:
+        String valorTotal = (String.valueOf(Float.parseFloat(totalPagCaixa.getText()) - Float.parseFloat(valorPagCaixa.getText())));  
+        trocoCaixa.setText(valorTotal);
     }//GEN-LAST:event_dinheiroCaixaActionPerformed
 
     private void debitoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debitoCaixaActionPerformed
-        // TODO add your handling code here:
+        valorPagCaixa.setText(String.valueOf(totalPagCaixa.getText()));
+        String valorTotal = (String.valueOf(Float.parseFloat(totalPagCaixa.getText()) - Float.parseFloat(valorPagCaixa.getText())));  
+        trocoCaixa.setText(valorTotal);
     }//GEN-LAST:event_debitoCaixaActionPerformed
 
     private void creditoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditoCaixaActionPerformed
-        // TODO add your handling code here:
+        valorPagCaixa.setText(String.valueOf(totalPagCaixa.getText()));
+        String valorTotal = (String.valueOf(Float.parseFloat(totalPagCaixa.getText()) - Float.parseFloat(valorPagCaixa.getText())));  
+        trocoCaixa.setText(valorTotal);
     }//GEN-LAST:event_creditoCaixaActionPerformed
 
     private void finalizarPagCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarPagCaixaActionPerformed
@@ -734,6 +767,24 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             });
         }
     }//GEN-LAST:event_btnPesquisarProd1ActionPerformed
+
+    private void valorPagCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorPagCaixaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_valorPagCaixaActionPerformed
+
+    private void trocoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trocoCaixaActionPerformed
+         
+        try {
+            String valorTotal = (String.valueOf(Float.parseFloat(totalPagCaixa.getText()) - Float.parseFloat(valorPagCaixa.getText())));  
+          trocoCaixa.setText(valorTotal);
+        } catch (NumberFormatException ex) {
+           
+        }
+    }//GEN-LAST:event_trocoCaixaActionPerformed
+
+    private void totalCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalCaixaActionPerformed
+      
+    }//GEN-LAST:event_totalCaixaActionPerformed
 
     /**
      * @param args the command line arguments

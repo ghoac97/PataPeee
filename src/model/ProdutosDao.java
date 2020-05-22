@@ -23,10 +23,11 @@ public class ProdutosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            //            stmt= con.prepareStatement("INSERT INTO alunos(ra,nome) values (?,?)");
-            // stmt = con.prepareStatement("INSERT INTO produtos(nome,descricao,data_validade,categoria,quantidade,valor,cod_for) values ('TapeteHigienico','tapetesparapets','2021-04-14','v',20,40,2)");
-
-            stmt = con.prepareStatement("INSERT INTO Produtos(nome,cod_prod,cod_for,descricao,data_validade,categoria,quantidade,valor) values (?,?,?,?,?,?,?,?)");
+                       //stmt= con.prepareStatement("INSERT INTO alunos(ra,nome) values (?,?)");
+            stmt = con.prepareStatement("INSERT INTO Produtos(nome,descricao,data_validade,categoria,quantidade,valor,cod_for) values ('TapeteHigienico','tapetesparapets','2021-04-14','v',20,40,2)");
+            
+            //String cmd = "INSERT INTO Produtos(nome,cod_prod,cod_for,descricao,data_validade,categoria,quantidade,valor) values (?,?,?,?,?,?,?,?)";
+            
             System.out.println(stmt);
             stmt.setString(1, p.getnome());
             stmt.setInt(2, p.getcod_prod());
@@ -51,7 +52,7 @@ public class ProdutosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from produtos where cod_prod=?;");
+            stmt = con.prepareStatement("delete from Produtos where cod_prod=?;");
             stmt.setInt(1, p.getcod_prod());
 
             stmt.executeUpdate();
@@ -117,6 +118,34 @@ public class ProdutosDao {
             JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
         }
         return produtos;
+    }
+    
+    public Produtos getProdutoPorID(int id){
+        Produtos produto = null;        
+        try {
+            Connection conn = connectionFactory.getConnection();
+            
+            String query = "select * from Produtos where cod_prod = ?";
+            PreparedStatement stmt = conn.prepareStatement(query.toLowerCase());
+            stmt.setInt(1, id);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                produto = new Produtos();
+                produto.setcod_prod(rs.getInt("cod_prod"));
+                produto.setcod_for(rs.getInt("cod_for"));
+                produto.setnome(rs.getString("nome"));
+                produto.setdescricao(rs.getString("descricao"));
+                produto.setdata_validade(rs.getString("data_validade"));
+                produto.setcategoria(rs.getString("categoria"));
+                produto.setvalor(rs.getInt("valor"));
+                produto.setquantidade(rs.getInt("quantidade"));
+            }
+            connectionFactory.closeConnection(conn, stmt, rs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
+        }
+        return produto;
     }    
 
 }

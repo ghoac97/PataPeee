@@ -20,19 +20,16 @@ public class PetsDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            //stmt = con.prepareStatement("INSERT INTO Pets(cod_pet,cod_cli,nome,porte,especie,raca,sexo,idade,cor) values (?,?,?,?,?,?,?,?,?)");
-            stmt = con.prepareStatement("INSERT INTO Pets(nome,porte,especie,raca,idade,cor) values (?,?,?,?,?,?)");
-            /*
-            stmt.setInt(1, p.getcod_pet());
-            stmt.setInt(2, p.getcod_cli());
-            */
+            String cmd = "INSERT INTO Pets(nome,porte,especie,raca,idade,cor, sexo, cod_cli) values (?,?,?,?,?,?,?,?)";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setString(1, p.getnome());
             stmt.setString(2, p.getporte());
             stmt.setString(3, p.getespecie());
             stmt.setString(4, p.getraca());
-            //stmt.setString(5, p.getsexo());
             stmt.setInt(5, p.getidade());
             stmt.setString(6, p.getcor());
+            stmt.setString(7, p.getsexo());
+            stmt.setInt(8, p.getcod_cli());
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Inserido.");
@@ -48,7 +45,8 @@ public class PetsDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from Pets where cod_pet=?;");
+            String cmd = "delete from Pets where cod_pet=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_pet());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Excluido com sucesso");
@@ -64,7 +62,8 @@ public class PetsDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("update Pets set cod_pet=?,cod_cli=?,nome=?,porte=?,especie=?,raca=?,sexo=?,idade=?,cor=? where cod_pet=?;");
+            String cmd = "update Pets set cod_pet=?,cod_cli=?,nome=?,porte=?,especie=?,raca=?,sexo=?,idade=?,cor=? where cod_pet=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_pet());
             stmt.setInt(2, p.getcod_cli());
             stmt.setString(3, p.getnome());

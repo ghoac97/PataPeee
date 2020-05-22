@@ -6,6 +6,7 @@
 package Telas;
 
 import Telas.Tela03_B_HomeGerencia;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Produtos;
 import model.ProdutosDao;
@@ -55,7 +56,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         valorCadProd = new javax.swing.JTextField();
-        categoriaCadProd = new javax.swing.JComboBox<>();
+        categoriaCadProd = new javax.swing.JComboBox<String>();
         jLabel15 = new javax.swing.JLabel();
         qtdCadProd = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -123,6 +124,11 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabelaProd);
 
         pesquisaProd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        pesquisaProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesquisaProdActionPerformed(evt);
+            }
+        });
 
         btnPesquisarProd.setBackground(new java.awt.Color(30, 0, 45));
         btnPesquisarProd.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -254,7 +260,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         jLabel8.setText("Validade");
 
         categoriaCadProd.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        categoriaCadProd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alimentos", "Higiene e Beleza", "Farmácia", "Acessórios" }));
+        categoriaCadProd.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alimentos", "Higiene e Beleza", "Farmácia", "Acessórios" }));
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(51, 51, 51));
@@ -268,6 +274,11 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(51, 51, 51));
         jLabel16.setText("Qtd.");
 
+        codCadProd.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                GetProduto(evt);
+            }
+        });
         codCadProd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 codCadProdActionPerformed(evt);
@@ -286,7 +297,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(voltarCadProd)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -336,7 +347,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -395,12 +406,22 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void limparCampos(){
+        codCadProd.setText("");
+        nomeCadProd.setText("");
+        descricaoCadProd.setText("");
+        validadeCadProd.setText("");
+        valorCadProd.setText("");
+        qtdCadProd.setText("");
+        fornecedorCadProd.setText("");
+    }
+    
     private void inserirCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirCadProdActionPerformed
         Produtos Produtos = new Produtos();
         ProdutosDao pdao = new ProdutosDao();
@@ -413,13 +434,8 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         Produtos.setvalor(Integer.parseInt(valorCadProd.getText()));
         Produtos.setquantidade(Integer.parseInt(qtdCadProd.getText()));
         Produtos.setcod_for(Integer.parseInt(fornecedorCadProd.getText()));
-        codCadProd.setText("");
-        nomeCadProd.setText("");
-        descricaoCadProd.setText("");
-        validadeCadProd.setText("");
-        valorCadProd.setText("");
-        qtdCadProd.setText("");
-        fornecedorCadProd.setText("");
+        
+        limparCampos();
 
         pdao.create(Produtos);    }//GEN-LAST:event_inserirCadProdActionPerformed
 
@@ -430,10 +446,9 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarProdutosGerenciaActionPerformed
 
     private void atualizarCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarCadProdActionPerformed
-    Produtos Produtos = new Produtos();
+        Produtos Produtos = new Produtos();
         ProdutosDao pdao = new ProdutosDao();
-        
-        
+
         Produtos.setcod_prod(Integer.parseInt(codCadProd.getText()));
         Produtos.setnome(nomeCadProd.getText());
         Produtos.setdescricao(descricaoCadProd.getText());
@@ -442,7 +457,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         Produtos.setvalor(Integer.parseInt(valorCadProd.getText()));
         Produtos.setquantidade(Integer.parseInt(qtdCadProd.getText()));
         Produtos.setcod_for(Integer.parseInt(fornecedorCadProd.getText()));
-       
+
         pdao.update(Produtos);
     }//GEN-LAST:event_atualizarCadProdActionPerformed
 
@@ -456,18 +471,19 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         Produtos Produtos = new Produtos();
         ProdutosDao pdao = new ProdutosDao();
         Produtos.setcod_prod(Integer.parseInt(codCadProd.getText()));
-        
-        
+
         pdao.delete(Produtos);
+
+        limparCampos();
     }//GEN-LAST:event_excluirCadProdActionPerformed
 
     private void btnPesquisarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarProdActionPerformed
-        DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel(); 
+        DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel();
         tabelaProdutos.setNumRows(0);
-        ProdutosDao dao = new ProdutosDao(); 
+        ProdutosDao dao = new ProdutosDao();
         for (Produtos c : dao.getContatos()) {
-            tabelaProdutos.addRow(new Object[]{c.getcod_prod(), c.getcod_for(), 
-                c.getnome(), c.getdescricao(), c.getdata_validade(), 
+            tabelaProdutos.addRow(new Object[]{c.getcod_prod(), c.getcod_for(),
+                c.getnome(), c.getdescricao(), c.getdata_validade(),
                 c.getcategoria(), c.getvalor(), c.getquantidade()
             });
         }
@@ -480,6 +496,31 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
     private void validadeCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validadeCadProdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_validadeCadProdActionPerformed
+
+    private void GetProduto(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_GetProduto
+        // TODO add your handling code here:
+        ProdutosDao Produtos = new ProdutosDao();
+        Produtos p = Produtos.getProdutoPorID(Integer.parseInt(codCadProd.getText()));
+
+        if (p != null) {
+            nomeCadProd.setText(p.getnome());
+            descricaoCadProd.setText(p.getdescricao());
+            validadeCadProd.setValue(p.getdata_validade());
+            //corrigir aqui
+            //categoriaCadProd.setEditor(p.getcategoria());  
+            valorCadProd.setText(p.getvalor().toString());
+            qtdCadProd.setText(p.getquantidade().toString());
+            fornecedorCadProd.setText(p.getcod_for().toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado");
+            limparCampos();
+        }
+
+    }//GEN-LAST:event_GetProduto
+
+    private void pesquisaProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisaProdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pesquisaProdActionPerformed
 
     /**
      * @param args the command line arguments
