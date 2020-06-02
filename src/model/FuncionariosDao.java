@@ -20,9 +20,10 @@ public class FuncionariosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO Funcionarios(cod_func,nome,cpf,rg,data_nacimento,nome_pai,nome_mae,"
-                    + "estado_civil,titulo_eleitor,nacionalidade,naturalidade,uf_n,cam,telefone,celular,endereco,cidade,bairro"
-                    + "cep,uf,email,pis_pasep,ctps,uf_c,cargo,data_admissao,remuneracao,horario_trabalho) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            String cmd = "INSERT INTO Funcionarios(cod_func,nome,cpf,rg,data_nacimento,nome_pai,nome_mae," 
+                        + "estado_civil,titulo_eleitor,nacionalidade,naturalidade,uf_n,cam,telefone,celular,endereco,cidade,bairro,"
+                        + "cep,uf,email,pis_pasep,ctps,uf_c,cargo,data_admissao,remuneracao,horario_trabalho) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_func());
             stmt.setString(2, p.getnome());
             stmt.setString(3, p.getcpf());
@@ -65,7 +66,8 @@ public class FuncionariosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from Funcionarios where cod_func=?;");
+            String cmd = "delete from Funcionarios where cod_func=?;";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_func());
             
             stmt.executeUpdate();
@@ -82,9 +84,10 @@ public class FuncionariosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-           stmt = con.prepareStatement("update Funcionarios set cod_func=?,nome=?,cpf=?,rg=?,data_nacimento=?,nome_pai=?,nome_mae=?,"
+            String cmd = "update Funcionarios set cod_func=?,nome=?,cpf=?,rg=?,data_nacimento=?,nome_pai=?,nome_mae=?,"
                     + "estado_civil=?,titulo_eleitor=?,nacionalidade=?,naturalidade=?,uf_n=?,cam=?,telefone=?,celular=?,endereco=?,cidade=?,bairro=?"
-                    + "cep=?,uf=?,email=?,pis_pasep=?,ctps=?,uf_c=?,cargo=?,data_admissao=?,remuneracao=?,horario_trabalho=? where cod_func=?;");
+                    + "cep=?,uf=?,email=?,pis_pasep=?,ctps=?,uf_c=?,cargo=?,data_admissao=?,remuneracao=?,horario_trabalho=? where cod_func=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());            
             stmt.setInt(1, p.getcod_func());
             stmt.setString(2, p.getnome());
             stmt.setString(3, p.getcpf());

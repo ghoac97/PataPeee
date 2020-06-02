@@ -22,8 +22,8 @@ public class ClientesDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-
-            stmt = con.prepareStatement("INSERT INTO Clientes(nome,data_nascimento,cpf,telefone,celular,endereco,cidade,bairro,cep,uf,email) values (?,?,?,?,?,?,?,?,?,?,?)");
+            String cmd = "INSERT INTO Clientes(nome,data_nascimento,cpf,telefone,celular,endereco,cidade,bairro,cep,uf,email) values (?,?,?,?,?,?,?,?,?,?,?)";
+            stmt = con.prepareStatement(cmd.toLowerCase());
 
             stmt.setString(1, p.getnome());
             stmt.setString(2, p.getdata_nascimento());
@@ -50,7 +50,8 @@ public class ClientesDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from Clientes where cpf=?;");
+            String cmd = "delete from Clientes where cpf=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());            
             stmt.setString(1, p.getcpf());
 
             stmt.executeUpdate();
@@ -67,7 +68,8 @@ public class ClientesDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("update Clientes set nome=?,data_nascimento=?,cpf=?,telefone=?,celular=?,endereco=?,cidade=?,bairro=?,cep=?,uf=?,email=? where cpf=? ");
+            String cmd = "update Clientes set nome=?,data_nascimento=?,cpf=?,telefone=?,celular=?,endereco=?,cidade=?,bairro=?,cep=?,uf=?,email=? where cpf=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());            
             stmt.setString(1, p.getnome());
             stmt.setString(2, p.getdata_nascimento());
             stmt.setString(3, p.getcpf());
@@ -90,17 +92,16 @@ public class ClientesDao {
         }
     }
 
-    public Clientes getPorCPF(String cpf) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+    public Clientes getClientePorCPF(String cpf) {
+        cpf = cpf.replace(".", "").replace("-", "");
         Clientes cliente = new Clientes();
         try {
-            conn = connectionFactory.getConnection();
-            stmt = conn.prepareStatement("select * from Clientes where cpf like ?");
-            stmt.setString(1, cpf + '%');
+            Connection conn = connectionFactory.getConnection();
+            String query = "select * from clientes where cpf = ?";
+            PreparedStatement stmt = conn.prepareStatement(query.toLowerCase());
+            stmt.setString(1, cpf);
 
-            rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 cliente.setcod_cli(rs.getInt("cod_cli"));
                 cliente.setnome(rs.getString("nome"));
@@ -114,10 +115,12 @@ public class ClientesDao {
                 cliente.setemail(rs.getString("email"));
                 break;
             }
+
             connectionFactory.closeConnection(conn, stmt, rs);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao pesquisar cliente: " + e.getMessage());
         }
+
         return cliente;
     }
 
@@ -128,7 +131,7 @@ public class ClientesDao {
         ArrayList<Clientes> clientes = new ArrayList<Clientes>();
         try {
             conn = connectionFactory.getConnection();
-            stmt = conn.prepareStatement("select * from Clientes where nome like ?");
+            stmt = conn.prepareStatement("select * from Clientes where nome like ?".toLowerCase());
             stmt.setString(1, '%' + nome + '%');
             rs = stmt.executeQuery();
             while (rs.next()) {

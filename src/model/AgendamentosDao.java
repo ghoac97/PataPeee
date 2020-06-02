@@ -20,8 +20,8 @@ public class AgendamentosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-
-            stmt = con.prepareStatement("INSERT INTO Agendamentos(cod_age,cod_pet,data_agendada) values (?,?,?)");
+            String cmd = "INSERT INTO Agendamentos(cod_age,cod_pet,data_agendada) values (?,?,?)";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_age());
             stmt.setInt(2, p.getcod_pet());
             stmt.setString(3, p.getdata_agendada());
@@ -40,7 +40,8 @@ public class AgendamentosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from Agendamentos where cod_pet=?;");
+            String cmd = "delete from Agendamentos where cod_pet=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_pet());
        
             stmt.executeUpdate();
@@ -57,7 +58,8 @@ public class AgendamentosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("update Agendamentos set cod_age=?,cod_pet=?,data_agendada=? where cod_pet=? ");
+            String cmd = "update Agendamentos set cod_age=?,cod_pet=?,data_agendada=? where cod_pet=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_age());
             stmt.setInt(2, p.getcod_pet());
             stmt.setString(3, p.getdata_agendada());

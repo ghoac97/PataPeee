@@ -13,9 +13,9 @@ public class FornecedoresDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO Fornecedores(nome,data_cadastro,cpf_cnpj,tipo,telefone,celular,endereco,cidade,bairro,cep,uf,email) values (?,?,?,?,?,?,?,?,?,?,?,?)");
+            String cmd = "INSERT INTO Fornecedores(nome,data_cadastro,cpf_cnpj,tipo,telefone,celular,endereco,cidade,bairro,cep,uf,email) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+            stmt = con.prepareStatement(cmd.toLowerCase());            
             
-            // stmt.setInt(1, p.getcod_for());
             stmt.setString(1, p.getnome());
             stmt.setString(2, p.getdata_cadastro());
             stmt.setString(3, p.getcpf_cnpj());
@@ -42,7 +42,8 @@ public class FornecedoresDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from Fornecedores where cpf_cnpj=?;");
+            String cmd = "delete from Fornecedores where cpf_cnpj=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());            
             stmt.setString(1, p.getcpf_cnpj());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Excluído com sucesso");
@@ -58,8 +59,8 @@ public class FornecedoresDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("update Fornecedores set nome=?,data_cadastro=?,cpf_cnpj=?,tipo=?,telefone=?,celular=?,endereco=?,cidade=?,bairro=?,cep=?,uf=?,email=? where cpf_cnpj=? ");
-            //stmt.setInt(1, p.getcod_for());
+            String cmd = "update Fornecedores set nome=?,data_cadastro=?,cpf_cnpj=?,tipo=?,telefone=?,celular=?,endereco=?,cidade=?,bairro=?,cep=?,uf=?,email=? where cpf_cnpj=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setString(1, p.getnome());
             stmt.setString(2, p.getdata_cadastro());
             stmt.setString(3, p.getcpf_cnpj());
@@ -90,7 +91,9 @@ public class FornecedoresDao {
         ArrayList<Fornecedores> fornecedores = new ArrayList<Fornecedores>();
         try {
             conn = connectionFactory.getConnection();
-            stmt = conn.prepareStatement("select * from fornecedores");
+            
+            String cmd = "select * from fornecedores";
+            stmt = conn.prepareStatement(cmd.toLowerCase());
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Fornecedores fornecedor = new Fornecedores(); 

@@ -19,8 +19,8 @@ public class Servico_precosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-
-            stmt = con.prepareStatement("INSERT INTO Servicos_precos(cod_preco,cod_serv,porte,tempo,valor) values (?,?,?,?,?)");
+            String cmd = "INSERT INTO Servicos_precos(cod_preco,cod_serv,porte,tempo,valor) values (?,?,?,?,?)";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_preco());
             stmt.setInt(2, p.getcod_serv());
             stmt.setString(3, p.getporte());
@@ -41,7 +41,9 @@ public class Servico_precosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from Servicos_precos where cod_serv=?;");
+            String cmd = "delete from Servicos_precos where cod_serv=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());
+           
             stmt.setInt(1, p.getcod_serv());
        
             stmt.executeUpdate();
@@ -58,7 +60,8 @@ public class Servico_precosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("update Servicos_precos set cod_preco=?,cod_serv=?,porte=?,tempo=?,valor=? where cod_serv=? ");
+            String cmd = "update Servicos_precos set cod_preco=?,cod_serv=?,porte=?,tempo=?,valor=? where cod_serv=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_preco());
             stmt.setInt(2, p.getcod_serv());
             stmt.setString(3, p.getporte());

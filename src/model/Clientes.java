@@ -43,7 +43,7 @@ public class Clientes {
     }
 
     public String getdata_nascimento() {
-        return data_nascimento;
+        return data_nascimento.replace("-", "/");
     }
 
     public void setdata_nascimento(String data_nascimento) {

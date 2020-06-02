@@ -23,12 +23,9 @@ public class ProdutosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-                       //stmt= con.prepareStatement("INSERT INTO alunos(ra,nome) values (?,?)");
-            stmt = con.prepareStatement("INSERT INTO Produtos(nome,descricao,data_validade,categoria,quantidade,valor,cod_for) values ('TapeteHigienico','tapetesparapets','2021-04-14','v',20,40,2)");
+            String cmd = "INSERT INTO Produtos(nome,descricao,data_validade,categoria,quantidade,valor,cod_for) values ('TapeteHigienico','tapetesparapets','2021-04-14','v',20,40,2)";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             
-            //String cmd = "INSERT INTO Produtos(nome,cod_prod,cod_for,descricao,data_validade,categoria,quantidade,valor) values (?,?,?,?,?,?,?,?)";
-            
-            System.out.println(stmt);
             stmt.setString(1, p.getnome());
             stmt.setInt(2, p.getcod_prod());
             stmt.setInt(3, p.getcod_for());
@@ -52,7 +49,8 @@ public class ProdutosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("delete from Produtos where cod_prod=?;");
+            String cmd = "delete from Produtos where cod_prod=?";
+            stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_prod());
 
             stmt.executeUpdate();
@@ -69,10 +67,9 @@ public class ProdutosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            //("INSERT INTO Produtos(nome,cod_prod,cod_for,descricao,"
-            //      + "data_validade,categoria,quantidade,valor) values (?,?,?,?,?,?,?,?)");
-            stmt = con.prepareStatement("update Produtos set nome=?, cod_prod=?, cod_for=?, descricao=?, data_validade=?, "
-                    + "categoria=? ,quantidade=?, valor = ? where cod_prod=?;");
+            String cmd = "update Produtos set nome=?, cod_prod=?, cod_for=?, descricao=?, data_validade=?, "
+                    + "categoria=? ,quantidade=?, valor = ? where cod_prod=?;";
+            stmt = con.prepareStatement(cmd.toLowerCase());            
             stmt.setString(1, p.getnome());
             stmt.setInt(2, p.getcod_prod());
             stmt.setInt(3, p.getcod_for());
@@ -99,7 +96,8 @@ public class ProdutosDao {
         ArrayList<Produtos> produtos = new ArrayList<Produtos>();
         try {
             conn = connectionFactory.getConnection();
-            stmt = conn.prepareStatement("select * from produtos");
+            String cmd = "select * from produtos";
+            stmt = conn.prepareStatement(cmd.toLowerCase());
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Produtos produto = new Produtos(); 

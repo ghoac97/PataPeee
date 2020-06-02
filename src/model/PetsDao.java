@@ -59,7 +59,7 @@ public class PetsDao {
     }
 
     public void update(Pets p) {
-        Connection con = connectionFactory.getConnection();
+         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
             String cmd = "update Pets set cod_pet=?,cod_cli=?,nome=?,porte=?,especie=?,raca=?,sexo=?,idade=?,cor=? where cod_pet=?";
