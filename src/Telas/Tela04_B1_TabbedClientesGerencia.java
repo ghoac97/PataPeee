@@ -132,6 +132,11 @@ public class Tela04_B1_TabbedClientesGerencia extends javax.swing.JFrame {
         });
 
         pesquisaCli.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        pesquisaCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesquisaCliActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -772,7 +777,8 @@ public class Tela04_B1_TabbedClientesGerencia extends javax.swing.JFrame {
         DefaultTableModel tabelaClientes = (DefaultTableModel) tabelaCli.getModel(); 
         tabelaClientes.setNumRows(0);
         ClientesDao dao = new ClientesDao(); 
-        for (Clientes c : dao.getContatos()) {
+        //Produtos p = Produtos.getProdutoPorID(Integer.parseInt(codCadProd.getText()));
+        for (Clientes c : dao.getContatos(pesquisaCli.getText().toString())) {
             tabelaClientes.addRow(new Object[]{c.getcod_cli(), c.getnome(), 
                 c.getcpf(), c.getdata_nascimento(), c.gettelefone(), c.getcelular(), 
                 c.getendereco(), c.getcep(), c.getbairro(), c.getemail()
@@ -783,6 +789,10 @@ public class Tela04_B1_TabbedClientesGerencia extends javax.swing.JFrame {
     private void porteAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porteAgendServActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_porteAgendServActionPerformed
+
+    private void pesquisaCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisaCliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pesquisaCliActionPerformed
 
     /**
      * @param args the command line arguments

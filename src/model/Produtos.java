@@ -53,7 +53,7 @@ public class Produtos {
     }
 
     public String getdata_validade() {
-        return data_validade;
+        return data_validade.replace("-", "/");
     }
 
     public void setdata_validade(String data_validade) {

@@ -55,7 +55,7 @@ public class Tela04_A2_TabbedServicosAtendimento2 extends javax.swing.JFrame {
         porteAgendServ = new javax.swing.JComboBox<String>();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaServicosAgend = new javax.swing.JList<String>();
+        listaServicosAgend = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
