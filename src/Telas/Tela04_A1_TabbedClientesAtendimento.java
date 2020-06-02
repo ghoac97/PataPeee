@@ -760,7 +760,7 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
         PetsDao pdao = new PetsDao();
         ClientesDao cdao = new ClientesDao();
         
-        Clientes cliente = cdao.getClientePorCPF(cpfCadPet.getText());
+        Clientes cliente = cdao.getPorCPF(cpfCadPet.getText());
         Pets Pets = new Pets();
         
         // Fill Form
