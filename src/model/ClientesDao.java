@@ -90,14 +90,15 @@ public class ClientesDao {
         }
     }
     
-    public ArrayList<Clientes> getContatos(){
+    public ArrayList<Clientes> getContatos(String nome){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ArrayList<Clientes> clientes = new ArrayList<Clientes>();
         try {
             conn = connectionFactory.getConnection();
-            stmt = conn.prepareStatement("select * from clientes");
+            stmt = conn.prepareStatement("select * from Clientes where nome like ?");
+              stmt.setString(1, '%' + nome + '%');
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Clientes cliente = new Clientes(); 

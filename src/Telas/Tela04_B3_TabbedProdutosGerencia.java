@@ -56,7 +56,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         valorCadProd = new javax.swing.JTextField();
-        categoriaCadProd = new javax.swing.JComboBox<String>();
+        categoriaCadProd = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         qtdCadProd = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -124,11 +124,6 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabelaProd);
 
         pesquisaProd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        pesquisaProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pesquisaProdActionPerformed(evt);
-            }
-        });
 
         btnPesquisarProd.setBackground(new java.awt.Color(30, 0, 45));
         btnPesquisarProd.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -260,7 +255,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         jLabel8.setText("Validade");
 
         categoriaCadProd.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        categoriaCadProd.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alimentos", "Higiene e Beleza", "Farmácia", "Acessórios" }));
+        categoriaCadProd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alimentos", "Higiene e Beleza", "Farmácia", "Acessórios" }));
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(51, 51, 51));
@@ -274,7 +269,15 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(51, 51, 51));
         jLabel16.setText("Qtd.");
 
+        codCadProd.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                codCadProdMouseMoved(evt);
+            }
+        });
         codCadProd.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                codCadProdFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 GetProduto(evt);
             }
@@ -406,7 +409,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
         );
 
         pack();
@@ -490,7 +493,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarProdActionPerformed
 
     private void codCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codCadProdActionPerformed
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_codCadProdActionPerformed
 
     private void validadeCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validadeCadProdActionPerformed
@@ -501,7 +504,7 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
         // TODO add your handling code here:
         ProdutosDao Produtos = new ProdutosDao();
         Produtos p = Produtos.getProdutoPorID(Integer.parseInt(codCadProd.getText()));
-
+        
         if (p != null) {
             nomeCadProd.setText(p.getnome());
             descricaoCadProd.setText(p.getdescricao());
@@ -521,6 +524,14 @@ public class Tela04_B3_TabbedProdutosGerencia extends javax.swing.JFrame {
     private void pesquisaProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisaProdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pesquisaProdActionPerformed
+
+    private void codCadProdMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_codCadProdMouseMoved
+         
+    }//GEN-LAST:event_codCadProdMouseMoved
+
+    private void codCadProdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codCadProdFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codCadProdFocusGained
 
     /**
      * @param args the command line arguments

@@ -7,6 +7,7 @@ package Telas;
 
 import Telas.Tela03_B_HomeGerencia;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Produtos;
 import model.ProdutosDao;
@@ -57,7 +58,6 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         voltarCaixa = new javax.swing.JButton();
-        pesquisarCaixa = new javax.swing.JTextField();
         pesquisarCaixaBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -76,6 +76,8 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         qtdCaixa = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         excluirCaixa = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        pesquisarCaixa = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -224,10 +226,6 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             }
         });
 
-        pesquisarCaixa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        pesquisarCaixa.setToolTipText("Nome ou código do produto");
-        pesquisarCaixa.setName(""); // NOI18N
-
         pesquisarCaixaBtn.setBackground(new java.awt.Color(30, 0, 45));
         pesquisarCaixaBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         pesquisarCaixaBtn.setForeground(new java.awt.Color(255, 255, 255));
@@ -321,6 +319,11 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        codCaixa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                codCaixaFocusLost(evt);
+            }
+        });
         codCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 codCaixaActionPerformed(evt);
@@ -365,6 +368,11 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             }
         });
 
+        pesquisarCaixa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        pesquisarCaixa.setToolTipText("Nome ou código do produto");
+        pesquisarCaixa.setName(""); // NOI18N
+        jScrollPane5.setViewportView(pesquisarCaixa);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -376,10 +384,6 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(pesquisarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pesquisarCaixaBtn))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -392,10 +396,15 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                                     .addComponent(itemCaixa, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(codCaixa)
                                     .addComponent(qtdCaixa)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(excluirCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(adicionarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(pesquisarCaixaBtn))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(excluirCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(adicionarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(20, 20, 20))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(voltarCaixa)
@@ -410,10 +419,16 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pesquisarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pesquisarCaixaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
-                        .addGap(28, 28, 28)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(pesquisarCaixaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                                .addGap(29, 29, 29))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(codCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
@@ -434,9 +449,8 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                             .addComponent(excluirCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(adicionarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(voltarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(voltarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))))
         );
 
         jTabbedPane1.addTab("Caixa", jPanel1);
@@ -677,7 +691,15 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarCaixaActionPerformed
 
     private void pesquisarCaixaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarCaixaBtnActionPerformed
-        // TODO add your handling code here:
+         DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel();
+        tabelaProdutos.setNumRows(0);
+        ProdutosDao dao = new ProdutosDao();
+        for (Produtos c : dao.getContatos()) {
+            tabelaProdutos.addRow(new Object[]{c.getcod_prod(), c.getcod_for(),
+                c.getnome(), c.getdescricao(), c.getdata_validade(),
+                c.getcategoria(), c.getvalor(), c.getquantidade()
+            });
+        }
     }//GEN-LAST:event_pesquisarCaixaBtnActionPerformed
 
     private void adicionarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarCaixaActionPerformed
@@ -700,33 +722,16 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             totalCaixa.setText("0.0");
         }
 
-        /*
-        if((Double.parseDouble(tabelaCaixa.getValueAt(0, 0).toString()) > 0.0 )){
-            System.out.println(Double.parseDouble(tabelaCaixa.getValueAt(0, 0).toString()));
-        }
-        else{
-            
-        }
-        /*
-          
-        /*
-        ValorFinal();
-        //float semproduto = Float.parseFloat(tabelaCaixa.getValueAt(0, 2).toString());
-        //System.out.println(semproduto);
-        if(Float.parseFloat(tabelaCaixa.getValueAt(0, 2).toString()) <){
-           totalCaixa.setText(String.valueOf(0.0));
-        }
-         */
     }//GEN-LAST:event_excluirCaixaActionPerformed
 
     private void finalizarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarCaixaActionPerformed
         //Passa o valor total para tela de pagamento.
         totalPagCaixa.setText(totalCaixa.getText());
-        
+
         //Zera a tebla de pagamento. Solucao caso para voltar e incluir ou excluir item.
         DefaultTableModel modelo = (DefaultTableModel) tabelaPagCaixa.getModel();
         modelo.setRowCount(0);
-        
+
         //Copia a tabela  caixa para tabela pagamento.
         for (int i = 0; i < tabelaCaixa.getRowCount(); i++) {
             modelo.addRow(new Object[]{tabelaCaixa.getValueAt(i, 0).toString(), tabelaCaixa.getValueAt(i, 1).toString(), tabelaCaixa.getValueAt(i, 2).toString(), tabelaCaixa.getValueAt(i, 3).toString()});
@@ -756,7 +761,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_debitoCaixaActionPerformed
 
     private void creditoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditoCaixaActionPerformed
-        valorPagCaixa.setText(String.valueOf(totalPagCaixa.getText()));
+               valorPagCaixa.setText(String.valueOf(totalPagCaixa.getText()));
         String valorTotal = (String.valueOf(Float.parseFloat(totalPagCaixa.getText()) - Float.parseFloat(valorPagCaixa.getText())));
         trocoCaixa.setText(valorTotal);
     }//GEN-LAST:event_creditoCaixaActionPerformed
@@ -796,8 +801,23 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_totalCaixaActionPerformed
 
     private void codCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codCaixaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_codCaixaActionPerformed
+
+    private void codCaixaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codCaixaFocusLost
+        ProdutosDao Produtos = new ProdutosDao();
+        Produtos p = Produtos.getProdutoPorID(Integer.parseInt(codCaixa.getText()));
+
+        if (p != null) {
+            itemCaixa.setText(p.getdescricao());
+            valorCaixa.setText(p.getvalor().toString());
+            qtdCaixa.setText("1");
+ 
+        } else {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado");
+            //limparCampos();
+        }
+    }//GEN-LAST:event_codCaixaFocusLost
 
     /**
      * @param args the command line arguments
@@ -993,6 +1013,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField pesquisaProd1;
     private javax.swing.JTextField pesquisarCaixa;

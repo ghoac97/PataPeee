@@ -80,17 +80,17 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         idadeCadPet = new javax.swing.JTextField();
-        sexoCadPet = new javax.swing.JComboBox<>();
+        sexoCadPet = new javax.swing.JComboBox<String>();
         corCadPet = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         excluirCadPet = new javax.swing.JButton();
         atualizarCadPet = new javax.swing.JButton();
         inserirCadPet = new javax.swing.JButton();
         voltarCadPet = new javax.swing.JButton();
-        especieCadPet = new javax.swing.JComboBox<>();
+        especieCadPet = new javax.swing.JComboBox<String>();
         jLabel22 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        porteAgendServ = new javax.swing.JComboBox<>();
+        porteAgendServ = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -491,8 +491,7 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
         jLabel20.setText("Idade");
 
         sexoCadPet.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        sexoCadPet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fêmea", "Macho" }));
-        sexoCadPet.setOpaque(false);
+        sexoCadPet.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fêmea", "Macho" }));
         sexoCadPet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sexoCadPetActionPerformed(evt);
@@ -548,8 +547,7 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
         });
 
         especieCadPet.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        especieCadPet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cachorro", "Gato", "Pássaro", "Peixe", "Roedor", "Coelho", "Réptil" }));
-        especieCadPet.setOpaque(false);
+        especieCadPet.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cachorro", "Gato", "Pássaro", "Peixe", "Roedor", "Coelho", "Réptil" }));
         especieCadPet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 especieCadPetActionPerformed(evt);
@@ -565,8 +563,7 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
         jLabel15.setText("Porte");
 
         porteAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        porteAgendServ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P", "M", "G" }));
-        porteAgendServ.setOpaque(false);
+        porteAgendServ.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "P", "M", "G" }));
         porteAgendServ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 porteAgendServActionPerformed(evt);
@@ -629,7 +626,7 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jLabel16))
@@ -644,8 +641,10 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
                             .addComponent(jLabel17)
                             .addComponent(jLabel22))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(racaCadPet, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(racaCadPet, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
                             .addComponent(especieCadPet, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel15)
@@ -757,9 +756,15 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_atualizarCadPetActionPerformed
 
     private void inserirCadPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirCadPetActionPerformed
-        Pets Pets = new Pets();
-        PetsDao pdao = new PetsDao();
 
+        PetsDao pdao = new PetsDao();
+        ClientesDao cdao = new ClientesDao();
+        
+        Clientes cliente = cdao.getClientePorCPF(cpfCadPet.getText());
+        Pets Pets = new Pets();
+        
+        // Fill Form
+        Pets.setcod_cli(cliente.getcod_cli());
         Pets.setnome(nomeCadPet.getText());
         Pets.setespecie(String.valueOf(especieCadPet.getSelectedItem()));
         Pets.setraca(racaCadPet.getText());
@@ -768,6 +773,14 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
         Pets.setidade(Integer.parseInt(idadeCadPet.getText()));
         Pets.setcor(corCadPet.getText());
         pdao.create(Pets);
+        
+        // Clear Form
+        cpfCadCli.setText("");
+        nomeCadPet.setText("");
+        racaCadPet.setText("");
+        idadeCadPet.setText("");
+        corCadPet.setText("");        
+        
     }//GEN-LAST:event_inserirCadPetActionPerformed
 
     private void voltarCadPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarCadPetActionPerformed
@@ -785,12 +798,13 @@ public class Tela04_A1_TabbedClientesAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_porteAgendServActionPerformed
 
     private void btnPesquisarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCliActionPerformed
-        DefaultTableModel tabelaClientes = (DefaultTableModel) tabelaCli.getModel();
+       DefaultTableModel tabelaClientes = (DefaultTableModel) tabelaCli.getModel(); 
         tabelaClientes.setNumRows(0);
-        ClientesDao dao = new ClientesDao();
-        for (Clientes c : dao.getContatos()) {
-            tabelaClientes.addRow(new Object[]{c.getcod_cli(), c.getnome(),
-                c.getcpf(), c.getdata_nascimento(), c.gettelefone(), c.getcelular(),
+        ClientesDao dao = new ClientesDao(); 
+        //Produtos p = Produtos.getProdutoPorID(Integer.parseInt(codCadProd.getText()));
+        for (Clientes c : dao.getContatos(pesquisaCli.getText().toString())) {
+            tabelaClientes.addRow(new Object[]{c.getcod_cli(), c.getnome(), 
+                c.getcpf(), c.getdata_nascimento(), c.gettelefone(), c.getcelular(), 
                 c.getendereco(), c.getcep(), c.getbairro(), c.getemail()
             });
         }
