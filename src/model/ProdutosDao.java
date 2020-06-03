@@ -143,7 +143,7 @@ public class ProdutosDao {
             JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
         }
         return produto;
-    }    
+    }
 
 }
 

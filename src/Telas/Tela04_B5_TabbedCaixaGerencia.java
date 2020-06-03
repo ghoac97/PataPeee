@@ -9,6 +9,7 @@ import Telas.Tela03_B_HomeGerencia;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import model.Produtos;
 import model.ProdutosDao;
 
@@ -23,6 +24,20 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
      */
     public Tela04_B5_TabbedCaixaGerencia() {
         initComponents();
+    }
+    
+    private void limparCampos(){
+        codCaixa.setText("");
+        itemCaixa.setText("");
+        valorCaixa.setText("");
+        qtdCaixa.setText("");
+    }
+    
+    private void limparValores(){
+        valorPagCaixa.setText("");
+        trocoCaixa.setText("");
+        totalPagCaixa.setText("");
+        totalCaixa.setText("");
     }
 
     public void ValorFinal() {
@@ -52,13 +67,13 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         voltarProdutosAtendimento = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaProd = new javax.swing.JTable();
+        tabelaProdCaixa = new javax.swing.JTable();
         pesquisaProd1 = new javax.swing.JTextField();
         btnPesquisarProd1 = new javax.swing.JButton();
+        avancar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         voltarCaixa = new javax.swing.JButton();
-        pesquisarCaixaBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaCaixa = new javax.swing.JTable();
@@ -76,8 +91,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         qtdCaixa = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         excluirCaixa = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        pesquisarCaixa = new javax.swing.JTextField();
+        btnLimparCaixa = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -95,6 +109,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         trocoCaixa = new javax.swing.JTextField();
         finalizarPagCaixa = new javax.swing.JButton();
+        cancelarPagCaixa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -129,8 +144,8 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        tabelaProd.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        tabelaProd.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaProdCaixa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tabelaProdCaixa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -152,8 +167,13 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                 "Produto", "Fornecedor", "Nome", "Descrição", "Validade", "Categoria", "Valor", "Qtd."
             }
         ));
-        tabelaProd.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        jScrollPane1.setViewportView(tabelaProd);
+        tabelaProdCaixa.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaProdCaixa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaProdCaixaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaProdCaixa);
 
         pesquisaProd1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
@@ -168,6 +188,17 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             }
         });
 
+        avancar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        avancar.setForeground(new java.awt.Color(36, 99, 36));
+        avancar.setText(">>");
+        avancar.setBorderPainted(false);
+        avancar.setContentAreaFilled(false);
+        avancar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                avancarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -176,14 +207,16 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(voltarProdutosAtendimento)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(pesquisaProd1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPesquisarProd1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(avancar)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,8 +224,10 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
-                        .addComponent(voltarProdutosAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 289, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(voltarProdutosAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(avancar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -223,17 +258,6 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         voltarCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 voltarCaixaActionPerformed(evt);
-            }
-        });
-
-        pesquisarCaixaBtn.setBackground(new java.awt.Color(30, 0, 45));
-        pesquisarCaixaBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        pesquisarCaixaBtn.setForeground(new java.awt.Color(255, 255, 255));
-        pesquisarCaixaBtn.setText("Pesquisar");
-        pesquisarCaixaBtn.setBorderPainted(false);
-        pesquisarCaixaBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pesquisarCaixaBtnActionPerformed(evt);
             }
         });
 
@@ -368,10 +392,16 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             }
         });
 
-        pesquisarCaixa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        pesquisarCaixa.setToolTipText("Nome ou código do produto");
-        pesquisarCaixa.setName(""); // NOI18N
-        jScrollPane5.setViewportView(pesquisarCaixa);
+        btnLimparCaixa.setBackground(new java.awt.Color(30, 0, 45));
+        btnLimparCaixa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnLimparCaixa.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimparCaixa.setText("Limpar");
+        btnLimparCaixa.setBorderPainted(false);
+        btnLimparCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparCaixaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -379,36 +409,38 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(voltarCaixa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(excluirCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(adicionarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(25, 25, 25)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(qtdCaixa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(valorCaixa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5)
                                     .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(valorCaixa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                    .addComponent(itemCaixa, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(codCaixa)
-                                    .addComponent(qtdCaixa)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(pesquisarCaixaBtn))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(excluirCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(adicionarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(20, 20, 20))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(voltarCaixa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(codCaixa)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnLimparCaixa))
+                                    .addComponent(itemCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70))
         );
@@ -416,41 +448,36 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(pesquisarCaixaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                                .addGap(29, 29, 29))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(codCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(codCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4))
+                            .addComponent(btnLimparCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(itemCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(valorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(qtdCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(excluirCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(adicionarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(voltarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))))
+                        .addComponent(voltarCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 12, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Caixa", jPanel1);
@@ -565,6 +592,11 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         valorPagCaixa.setBackground(new java.awt.Color(222, 213, 226));
         valorPagCaixa.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         valorPagCaixa.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        valorPagCaixa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                valorPagCaixaFocusLost(evt);
+            }
+        });
         valorPagCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 valorPagCaixaActionPerformed(evt);
@@ -595,6 +627,18 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
             }
         });
 
+        cancelarPagCaixa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        cancelarPagCaixa.setForeground(new java.awt.Color(204, 0, 0));
+        cancelarPagCaixa.setText("Cancelar");
+        cancelarPagCaixa.setBorderPainted(false);
+        cancelarPagCaixa.setContentAreaFilled(false);
+        cancelarPagCaixa.setOpaque(false);
+        cancelarPagCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarPagCaixaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -616,7 +660,10 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                         .addComponent(debitoCaixa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(creditoCaixa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(finalizarPagCaixa)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(cancelarPagCaixa)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(finalizarPagCaixa))
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -628,7 +675,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(valorPagCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                                 .addComponent(trocoCaixa)))))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -657,9 +704,11 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(trocoCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13))
-                        .addGap(18, 18, 18)
-                        .addComponent(finalizarPagCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                        .addGap(26, 26, 26))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(finalizarPagCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                            .addComponent(cancelarPagCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                        .addGap(33, 33, 33))))
         );
 
         jTabbedPane1.addTab("Pagamento", jPanel4);
@@ -672,7 +721,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -684,65 +733,6 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_voltarProdutosAtendimentoActionPerformed
 
-    private void voltarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarCaixaActionPerformed
-        Tela03_B_HomeGerencia telaHomeGerencia = new Tela03_B_HomeGerencia();
-        telaHomeGerencia.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_voltarCaixaActionPerformed
-
-    private void pesquisarCaixaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarCaixaBtnActionPerformed
-         DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel();
-        tabelaProdutos.setNumRows(0);
-        ProdutosDao dao = new ProdutosDao();
-        for (Produtos c : dao.getContatos(pesquisaProd1.getText().toString())) {
-            tabelaProdutos.addRow(new Object[]{c.getcod_prod(), c.getcod_for(),
-                c.getnome(), c.getdescricao(), c.getdata_validade(),
-                c.getcategoria(), c.getvalor(), c.getquantidade()
-            });
-        }
-    }//GEN-LAST:event_pesquisarCaixaBtnActionPerformed
-
-    private void adicionarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarCaixaActionPerformed
-        DefaultTableModel modelo = (DefaultTableModel) tabelaCaixa.getModel();
-        modelo.addRow(new Object[]{codCaixa.getText(), itemCaixa.getText(), valorCaixa.getText(), qtdCaixa.getText()});
-        //int x = tabelaCaixa.get();
-        ValorFinal();
-    }//GEN-LAST:event_adicionarCaixaActionPerformed
-
-    private void excluirCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirCaixaActionPerformed
-        int x = tabelaCaixa.getSelectedRow();
-        if (x != 1) {
-            DefaultTableModel modelo = (DefaultTableModel) tabelaCaixa.getModel();
-            modelo.removeRow(x);
-        } else {
-
-        }
-        ValorFinal();
-        if (tabelaCaixa.getRowCount() == 0) {
-            totalCaixa.setText("0.0");
-        }
-
-    }//GEN-LAST:event_excluirCaixaActionPerformed
-
-    private void finalizarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarCaixaActionPerformed
-        //Passa o valor total para tela de pagamento.
-        totalPagCaixa.setText(totalCaixa.getText());
-
-        //Zera a tebla de pagamento. Solucao caso para voltar e incluir ou excluir item.
-        DefaultTableModel modelo = (DefaultTableModel) tabelaPagCaixa.getModel();
-        modelo.setRowCount(0);
-
-        //Copia a tabela  caixa para tabela pagamento.
-        for (int i = 0; i < tabelaCaixa.getRowCount(); i++) {
-            modelo.addRow(new Object[]{tabelaCaixa.getValueAt(i, 0).toString(), tabelaCaixa.getValueAt(i, 1).toString(), tabelaCaixa.getValueAt(i, 2).toString(), tabelaCaixa.getValueAt(i, 3).toString()});
-        }
-
-    }//GEN-LAST:event_finalizarCaixaActionPerformed
-
-    private void cancelarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCaixaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancelarCaixaActionPerformed
-
     private void voltarPagamentoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarPagamentoCaixaActionPerformed
         Tela03_B_HomeGerencia telaHomeGerencia = new Tela03_B_HomeGerencia();
         telaHomeGerencia.setVisible(true);
@@ -750,8 +740,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarPagamentoCaixaActionPerformed
 
     private void dinheiroCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dinheiroCaixaActionPerformed
-        String valorTotal = (String.valueOf(Float.parseFloat(totalPagCaixa.getText()) - Float.parseFloat(valorPagCaixa.getText())));
-        trocoCaixa.setText(valorTotal);
+        JOptionPane.showMessageDialog(null, "Inserir o valor pago.");        
     }//GEN-LAST:event_dinheiroCaixaActionPerformed
 
     private void debitoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debitoCaixaActionPerformed
@@ -761,17 +750,28 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_debitoCaixaActionPerformed
 
     private void creditoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditoCaixaActionPerformed
-               valorPagCaixa.setText(String.valueOf(totalPagCaixa.getText()));
+        valorPagCaixa.setText(String.valueOf(totalPagCaixa.getText()));
         String valorTotal = (String.valueOf(Float.parseFloat(totalPagCaixa.getText()) - Float.parseFloat(valorPagCaixa.getText())));
         trocoCaixa.setText(valorTotal);
     }//GEN-LAST:event_creditoCaixaActionPerformed
 
     private void finalizarPagCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarPagCaixaActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Compra efetuada.");
+        
+        //Limpar tabelas de caixa e de pagamento
+        tabelaCaixa.setModel(new DefaultTableModel(null, new String[]{"Cod", "Item", "Valor", "Qtd."}));
+        tabelaPagCaixa.setModel(new DefaultTableModel(null, new String[]{"Cod", "Item", "Valor", "Qtd."}));
+        
+        //Limpar campos pesquisados e calculados
+        limparCampos();
+        limparValores();
+        
+        //Mudar para a tela de consulta
+        jTabbedPane1.setSelectedIndex(0);
     }//GEN-LAST:event_finalizarPagCaixaActionPerformed
 
     private void btnPesquisarProd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarProd1ActionPerformed
-        DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel();
+        DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProdCaixa.getModel();
         tabelaProdutos.setNumRows(0);
         ProdutosDao dao = new ProdutosDao();
         for (Produtos c : dao.getContatos(pesquisaProd1.getText().toString())) {
@@ -796,9 +796,44 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_trocoCaixaActionPerformed
 
+    private void cancelarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCaixaActionPerformed
+        //Limpar tabela de caixa
+        tabelaCaixa.setModel(new DefaultTableModel(null, new String[]{"Cod", "Item", "Valor", "Qtd."}));
+
+        //Limpar campos pesquisados e valores calculados
+        limparCampos();
+        limparValores();
+        
+        //Mudar para a tela de consulta
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_cancelarCaixaActionPerformed
+
+    private void finalizarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarCaixaActionPerformed
+        //Passa o valor total para tela de pagamento.
+        totalPagCaixa.setText(totalCaixa.getText());
+
+        //Zera a tebla de pagamento. Solucao caso para voltar e incluir ou excluir item.
+        DefaultTableModel modelo = (DefaultTableModel) tabelaPagCaixa.getModel();
+        modelo.setRowCount(0);
+
+        //Copia a tabela  caixa para tabela pagamento.
+        for (int i = 0; i < tabelaCaixa.getRowCount(); i++) {
+            modelo.addRow(new Object[]{tabelaCaixa.getValueAt(i, 0).toString(), tabelaCaixa.getValueAt(i, 1).toString(), tabelaCaixa.getValueAt(i, 2).toString(), tabelaCaixa.getValueAt(i, 3).toString()});
+        }
+        
+        //Muda para a tela de pagamento
+        jTabbedPane1.setSelectedIndex(2);
+    }//GEN-LAST:event_finalizarCaixaActionPerformed
+
     private void totalCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalCaixaActionPerformed
 
     }//GEN-LAST:event_totalCaixaActionPerformed
+
+    private void voltarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarCaixaActionPerformed
+        Tela03_B_HomeGerencia telaHomeGerencia = new Tela03_B_HomeGerencia();
+        telaHomeGerencia.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_voltarCaixaActionPerformed
 
     private void codCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codCaixaActionPerformed
 
@@ -809,15 +844,74 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         Produtos p = Produtos.getProdutoPorID(Integer.parseInt(codCaixa.getText()));
 
         if (p != null) {
-            itemCaixa.setText(p.getdescricao());
+            itemCaixa.setText(p.getnome());
             valorCaixa.setText(p.getvalor().toString());
             qtdCaixa.setText("1");
- 
+
         } else {
             JOptionPane.showMessageDialog(null, "Produto não encontrado");
             //limparCampos();
         }
     }//GEN-LAST:event_codCaixaFocusLost
+
+    private void excluirCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirCaixaActionPerformed
+        int x = tabelaCaixa.getSelectedRow();
+        if (x != -1) {
+            DefaultTableModel modelo = (DefaultTableModel) tabelaCaixa.getModel();
+            modelo.removeRow(x);
+        } else {
+
+        }
+        ValorFinal();
+        if (tabelaCaixa.getRowCount() == 0) {
+            totalCaixa.setText("0.0");
+        }
+    }//GEN-LAST:event_excluirCaixaActionPerformed
+
+    private void adicionarCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarCaixaActionPerformed
+        DefaultTableModel modelo = (DefaultTableModel) tabelaCaixa.getModel();
+        modelo.addRow(new Object[]{codCaixa.getText(), itemCaixa.getText(), valorCaixa.getText(), qtdCaixa.getText()});
+        //int x = tabelaCaixa.get();
+        ValorFinal();
+    }//GEN-LAST:event_adicionarCaixaActionPerformed
+
+    private void tabelaProdCaixaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdCaixaMouseClicked
+        int i = tabelaProdCaixa.getSelectedRow();
+        TableModel model = tabelaProdCaixa.getModel();
+        codCaixa.setText(model.getValueAt(i, 0).toString());
+        itemCaixa.setText(model.getValueAt(i, 2).toString());
+        valorCaixa.setText(model.getValueAt(i, 6).toString());
+        qtdCaixa.setText("1");
+    }//GEN-LAST:event_tabelaProdCaixaMouseClicked
+
+    private void btnLimparCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparCaixaActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_btnLimparCaixaActionPerformed
+
+    private void cancelarPagCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarPagCaixaActionPerformed
+        //Limpar as tabelas de caixa e de pagamento
+        tabelaPagCaixa.setModel(new DefaultTableModel(null, new String[]{"Cod", "Item", "Valor", "Qtd."}));
+        tabelaCaixa.setModel(new DefaultTableModel(null, new String[]{"Cod", "Item", "Valor", "Qtd."}));
+        
+        //Limpar campos pesquisados na tela de caixa e valores calculados
+        limparCampos();
+        limparValores();
+        
+        //Mudar para a tela de consulta
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_cancelarPagCaixaActionPerformed
+
+    private void valorPagCaixaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_valorPagCaixaFocusLost
+        Float valorPago = Float.parseFloat(valorPagCaixa.getText());
+        String valorTotal = (String.valueOf(Float.parseFloat(totalPagCaixa.getText())));
+        Float troco = valorPago - Float.parseFloat(valorTotal);
+        trocoCaixa.setText(troco.toString());
+    }//GEN-LAST:event_valorPagCaixaFocusLost
+
+    private void avancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avancarActionPerformed
+        //Muda para a tela de caixa
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_avancarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -983,8 +1077,11 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adicionarCaixa;
+    private javax.swing.JButton avancar;
+    private javax.swing.JButton btnLimparCaixa;
     private javax.swing.JButton btnPesquisarProd1;
     private javax.swing.JButton cancelarCaixa;
+    private javax.swing.JButton cancelarPagCaixa;
     private javax.swing.JTextField codCaixa;
     private javax.swing.JButton creditoCaixa;
     private javax.swing.JButton debitoCaixa;
@@ -1013,15 +1110,12 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField pesquisaProd1;
-    private javax.swing.JTextField pesquisarCaixa;
-    private javax.swing.JButton pesquisarCaixaBtn;
     private javax.swing.JTextField qtdCaixa;
     private javax.swing.JTable tabelaCaixa;
     private javax.swing.JTable tabelaPagCaixa;
-    private javax.swing.JTable tabelaProd;
+    private javax.swing.JTable tabelaProdCaixa;
     private javax.swing.JTextField totalCaixa;
     private javax.swing.JTextField totalPagCaixa;
     private javax.swing.JTextField trocoCaixa;

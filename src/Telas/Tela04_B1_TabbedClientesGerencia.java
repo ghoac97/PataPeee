@@ -6,6 +6,7 @@
 package Telas;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import model.Clientes;
 import model.ClientesDao;
 
@@ -165,6 +166,11 @@ public class Tela04_B1_TabbedClientesGerencia extends javax.swing.JFrame {
             }
         ));
         tabelaCli.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaCli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaCliMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaCli);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -793,6 +799,20 @@ public class Tela04_B1_TabbedClientesGerencia extends javax.swing.JFrame {
     private void pesquisaCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisaCliActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pesquisaCliActionPerformed
+
+    private void tabelaCliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCliMouseClicked
+        /*int i = tabelaCli.getSelectedRow();
+        TableModel model = tabelaCli.getModel();        
+        nomeCadCli.setText(model.getValueAt(i, 1).toString());
+        cpfCadCli.setText(model.getValueAt(i, 2).toString());
+        nascCadCli.setText(model.getValueAt(i, 3).toString());
+        telCadCli.setText(model.getValueAt(i, 4).toString());
+        celCadCli.setText(model.getValueAt(i, 5).toString());
+        endCadCli.setText(model.getValueAt(i, 6).toString());
+        cepCadCli.setText(model.getValueAt(i, 7).toString());
+        bairroCadCli.setText(model.getValueAt(i, 8).toString());
+        emailCadCli.setText(model.getValueAt(i, 9).toString());*/
+    }//GEN-LAST:event_tabelaCliMouseClicked
 
     /**
      * @param args the command line arguments
