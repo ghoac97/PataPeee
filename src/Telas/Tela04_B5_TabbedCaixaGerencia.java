@@ -694,7 +694,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
          DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel();
         tabelaProdutos.setNumRows(0);
         ProdutosDao dao = new ProdutosDao();
-        for (Produtos c : dao.getContatos()) {
+        for (Produtos c : dao.getContatos(pesquisaProd1.getText().toString())) {
             tabelaProdutos.addRow(new Object[]{c.getcod_prod(), c.getcod_for(),
                 c.getnome(), c.getdescricao(), c.getdata_validade(),
                 c.getcategoria(), c.getvalor(), c.getquantidade()
@@ -774,7 +774,7 @@ public class Tela04_B5_TabbedCaixaGerencia extends javax.swing.JFrame {
         DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaProd.getModel();
         tabelaProdutos.setNumRows(0);
         ProdutosDao dao = new ProdutosDao();
-        for (Produtos c : dao.getContatos()) {
+        for (Produtos c : dao.getContatos(pesquisaProd1.getText().toString())) {
             tabelaProdutos.addRow(new Object[]{c.getcod_prod(), c.getcod_for(),
                 c.getnome(), c.getdescricao(), c.getdata_validade(),
                 c.getcategoria(), c.getvalor(), c.getquantidade()

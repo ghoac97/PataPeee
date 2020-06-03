@@ -557,7 +557,7 @@ public class Tela04_B2_TabbedFornecedores extends javax.swing.JFrame {
         DefaultTableModel tabelaFornecedores = (DefaultTableModel) tabelaForn.getModel();
         tabelaFornecedores.setNumRows(0);
         FornecedoresDao dao = new FornecedoresDao();
-        for (Fornecedores c : dao.getContatos()) {
+        for (Fornecedores c : dao.getContatos(pesquisaForn.getText().toString())) {
             tabelaFornecedores.addRow(new Object[]{c.getcod_for(), c.getnome(),
                 c.getcpf_cnpj(), c.getdata_cadastro(), c.gettipo(),
                 c.getuf(), c.getcidade(), c.getendereco(), c.getcep(), 

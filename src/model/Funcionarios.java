@@ -76,8 +76,8 @@ public class Funcionarios {
         return data_nacimento;
     }
 
-    public void setdata_nacimento(String data_nacimento) {
-        this.data_nacimento=data_nacimento;
+    public void setdata_nascimento(String data_nascimento) {
+        this.data_nacimento=data_nascimento;
     }
 
     public String getnome_pai() {

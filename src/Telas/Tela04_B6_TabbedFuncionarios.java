@@ -6,6 +6,9 @@
 package Telas;
 
 import Telas.Tela03_B_HomeGerencia;
+import javax.swing.table.DefaultTableModel;
+import model.Funcionarios;
+import model.FuncionariosDao;
 
 /**
  *
@@ -150,24 +153,24 @@ public class Tela04_B6_TabbedFuncionarios extends javax.swing.JFrame {
         tabelaFunc.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabelaFunc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Nome", "Data Nasc.", "Pai", "Mãe", "Est. Civil", "RG", "CPF", "Tit. Eleitor", "Nacional.", "Natural.", "UF Natal", "CAM", "Cidade", "UF Cidade", "Telefone", "Celular", "Endereço", "Nº", "CEP", "Bairro", "Comp.", "E-mail", "PIS/PASEP", "CTPS", "UF CTPS", "Cargo", "Data Admissão", "Salário", "Jornada"
+                "Código", "Nome", "CPF", "RG", "Data Nasc.", "Pai", "Mãe", "Est. Civil", "Tit. Eleitor", "Nacional.", "Natural.", "UF Natal", "CAM", "Telefone", "Celular", "Endereço", "Cidade", "Bairro", "CEP", "UF Cidade", "E-mail", "PIS/PASEP", "CTPS", "UF CTPS", "Cargo", "Data Admissão", "Salário", "Jornada"
             }
         ));
         tabelaFunc.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -1020,7 +1023,21 @@ public class Tela04_B6_TabbedFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_atualizarCadFunc2ActionPerformed
 
     private void pesquisarFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarFuncActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel tabelaFuncionarios = (DefaultTableModel) tabelaFunc.getModel(); 
+        tabelaFuncionarios.setNumRows(0);
+        FuncionariosDao dao = new FuncionariosDao(); 
+        //Produtos p = Produtos.getProdutoPorID(Integer.parseInt(codCadProd.getText()));
+        for (Funcionarios c : dao.getContatos(pesquisaFunc.getText().toString())) {
+            tabelaFuncionarios.addRow(new Object[]{c.getcod_func(), c.getnome(), 
+                c.getcpf(), c.getrg(), c.getdata_nacimento(), c.getnome_pai(),
+                c.getnome_mae(), c.getestado_civil(), c.gettitulo_eleitor(), 
+                c.getnacionalidade(), c.getnaturalidade(), c.getuf_n(), c.getcam(), 
+                c.gettelefone(), c.getcelular(), c.getendereco(), c.getcidade(), 
+                c.getbairro(), c.getcep(), c.getuf(), c.getemail(), c.getpis_pasep(),
+                c.getctps(), c.getuf_c(), c.getcargo(), c.getdata_admissao(),
+                c.getremuneracao(), c.gethorario_trabalho()
+            });
+        }
     }//GEN-LAST:event_pesquisarFuncActionPerformed
 
     /**

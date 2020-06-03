@@ -84,16 +84,15 @@ public class FornecedoresDao {
         }
     }
     
-    public ArrayList<Fornecedores> getContatos(){
+    public ArrayList<Fornecedores> getContatos(String nome){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ArrayList<Fornecedores> fornecedores = new ArrayList<Fornecedores>();
         try {
             conn = connectionFactory.getConnection();
-            
-            String cmd = "select * from fornecedores";
-            stmt = conn.prepareStatement(cmd.toLowerCase());
+            stmt = conn.prepareStatement("select * from Fornecedores where nome like ?".toLowerCase());
+            stmt.setString(1, '%' + nome + '%');
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Fornecedores fornecedor = new Fornecedores(); 

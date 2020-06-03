@@ -36,8 +36,6 @@ public class Clientes {
         return nome;
     }
     
-
-
     public void setnome(String nome) {
         this.nome = nome;
     }

@@ -6,7 +6,6 @@
 package model;
 
 import connection.connectionFactory;
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -89,15 +88,15 @@ public class ProdutosDao {
         }
     }
 
-    public ArrayList<Produtos> getContatos(){
+    public ArrayList<Produtos> getContatos(String nome){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ArrayList<Produtos> produtos = new ArrayList<Produtos>();
         try {
             conn = connectionFactory.getConnection();
-            String cmd = "select * from produtos";
-            stmt = conn.prepareStatement(cmd.toLowerCase());
+            stmt = conn.prepareStatement("select * from Produtos where nome like ?".toLowerCase());
+            stmt.setString(1, '%' + nome + '%');
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Produtos produto = new Produtos(); 
