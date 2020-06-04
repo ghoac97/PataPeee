@@ -15,7 +15,7 @@ public class Servicos_precos {
     private Integer cod_serv;
     private String porte;
     private String tempo;
-    private String valor;
+    private double valor;
 
     public Integer getcod_preco() {
         return cod_preco;
@@ -49,11 +49,11 @@ public class Servicos_precos {
         this.tempo = tempo;
     }
 
-    public String getvalor() {
+    public double getvalor() {
         return valor;
     }
 
-    public void setvalor(String valor) {
+    public void setvalor(double valor) {
         this.valor = valor;
     }
 

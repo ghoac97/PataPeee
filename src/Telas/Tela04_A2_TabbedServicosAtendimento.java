@@ -5,6 +5,23 @@
  */
 package Telas;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.AgendamentoSumario;
+import model.Agendamento_servicos;
+import model.Agendamento_servicosDao;
+import model.Agendamentos;
+import model.AgendamentosDao;
+import model.Clientes;
+import model.ClientesDao;
+import model.Pets;
+import model.PetsDao;
+import model.Servico_precosDao;
+import model.Servicos_precos;
+
 /**
  *
  * @author Denise Trevizo (usp)
@@ -16,6 +33,10 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
      */
     public Tela04_A2_TabbedServicosAtendimento() {
         initComponents();
+
+        codCliAgendServ.setVisible(false);
+        codPetAgendServ.setVisible(false);
+        porteAgendServ.setEditable(false);
     }
 
     /**
@@ -58,8 +79,11 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
         horarioAgendServ = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
         totalAgendServ = new javax.swing.JTextField();
-        porteAgendServ = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
+        dataAgendServ = new com.toedter.calendar.JDateChooser();
+        codCliAgendServ = new javax.swing.JTextField();
+        porteAgendServ = new javax.swing.JTextField();
+        codPetAgendServ = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -222,22 +246,47 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
         banhoAgendServ.setBackground(new java.awt.Color(255, 255, 255));
         banhoAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         banhoAgendServ.setText("Banho");
+        banhoAgendServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                banhoAgendServActionPerformed(evt);
+            }
+        });
 
         tosaAgendServ.setBackground(new java.awt.Color(255, 255, 255));
         tosaAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tosaAgendServ.setText("Tosa");
+        tosaAgendServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tosaAgendServActionPerformed(evt);
+            }
+        });
 
         tosa_higAgendServ.setBackground(new java.awt.Color(255, 255, 255));
         tosa_higAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tosa_higAgendServ.setText("Tosa higiênica");
+        tosa_higAgendServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tosa_higAgendServActionPerformed(evt);
+            }
+        });
 
         escovacaoAgendServ.setBackground(new java.awt.Color(255, 255, 255));
         escovacaoAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         escovacaoAgendServ.setText("Escovação de dentes");
+        escovacaoAgendServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                escovacaoAgendServActionPerformed(evt);
+            }
+        });
 
         unhasAgendServ.setBackground(new java.awt.Color(255, 255, 255));
         unhasAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         unhasAgendServ.setText("Corte de unhas");
+        unhasAgendServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unhasAgendServActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -283,8 +332,18 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        cpfAgendServ.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                buscarCliente(evt);
+            }
+        });
 
         petAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        petAgendServ.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                buscarPet(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
@@ -303,6 +362,11 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        horarioAgendServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                horarioAgendServActionPerformed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(51, 51, 51));
@@ -315,18 +379,24 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
             }
         });
 
-        porteAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        porteAgendServ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P", "M", "G" }));
-        porteAgendServ.setOpaque(false);
-        porteAgendServ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                porteAgendServActionPerformed(evt);
-            }
-        });
-
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(51, 51, 51));
         jLabel14.setText("Porte");
+
+        dataAgendServ.setDateFormatString("dd-MM-yyyy");
+        dataAgendServ.setMinSelectableDate(new java.util.Date(-62135755129000L));
+
+        codCliAgendServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codCliAgendServActionPerformed(evt);
+            }
+        });
+
+        codPetAgendServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codPetAgendServActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -347,24 +417,14 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(132, 132, 132)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(dataAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
                                     .addComponent(horarioAgendServ)))
                             .addComponent(clienteAgendServ, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(cpfAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(petAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(porteAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel14)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel13)
@@ -372,8 +432,26 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
                                 .addComponent(totalAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(85, 85, 85))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(codCliAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(codPetAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(cpfAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(petAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(porteAgendServ))
+                        .addGap(47, 47, 47))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(voltarAgendServ)
@@ -400,7 +478,9 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
                             .addComponent(jLabel12)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(horarioAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(horarioAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dataAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -414,7 +494,11 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cpfAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(petAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(porteAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(porteAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(codCliAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(codPetAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(voltarAgendServ, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -436,9 +520,32 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void porteAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porteAgendServActionPerformed
+    private void voltarAgendamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarAgendamentosActionPerformed
+        Tela03_A_HomeAtendimento telaHomeAtendimento = new Tela03_A_HomeAtendimento();
+        telaHomeAtendimento.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_voltarAgendamentosActionPerformed
+
+    private void btnPesquisarAgendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarAgendActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_porteAgendServActionPerformed
+        AgendamentosDao dao = new AgendamentosDao();
+        ArrayList<AgendamentoSumario> agendamentos = dao.getAgendamento();
+        
+        DefaultTableModel tabelaProdutos = (DefaultTableModel) tabelaAgend.getModel();
+        tabelaProdutos.setNumRows(0);
+        for (AgendamentoSumario a : agendamentos) {
+            tabelaProdutos.addRow(new Object[]{
+                a.getcod_age(),
+                a.getdata(),
+                "",
+                a.getcliente(),
+                a.getcpf(),
+                a.getpet(),
+                a.getporte(),
+                a.getservico()
+            });
+        }        
+    }//GEN-LAST:event_btnPesquisarAgendActionPerformed
 
     private void totalAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalAgendServActionPerformed
         // TODO add your handling code here:
@@ -456,17 +563,162 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
 
     private void inserirAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirAgendServActionPerformed
         // TODO add your handling code here:
+        cadastrarAgendamento();
     }//GEN-LAST:event_inserirAgendServActionPerformed
 
-    private void voltarAgendamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarAgendamentosActionPerformed
-        Tela03_A_HomeAtendimento telaHomeAtendimento = new Tela03_A_HomeAtendimento();
-        telaHomeAtendimento.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_voltarAgendamentosActionPerformed
-
-    private void btnPesquisarAgendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarAgendActionPerformed
+    private void horarioAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horarioAgendServActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnPesquisarAgendActionPerformed
+    }//GEN-LAST:event_horarioAgendServActionPerformed
+
+    private void buscarCliente(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buscarCliente
+        ClientesDao dao = new ClientesDao();
+        Clientes cliente = dao.getClientePorCPF(cpfAgendServ.getText());
+
+        if (cliente != null) {
+            cpfAgendServ.setText(cliente.getcpf());
+            clienteAgendServ.setText(cliente.getnome());
+            codCliAgendServ.setText(cliente.getcod_cli().toString());
+        } else {
+            cpfAgendServ.setText("");
+            clienteAgendServ.setText("");
+            codCliAgendServ.setText("");
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado");
+        }
+    }//GEN-LAST:event_buscarCliente
+
+    private void buscarPet(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buscarPet
+        // TODO add your handling code here:
+        PetsDao dao = new PetsDao();
+        Pets pets = dao.getPorNomeEDono(petAgendServ.getText(), Integer.parseInt(codCliAgendServ.getText()));
+
+        if (pets != null) {
+            petAgendServ.setText(pets.getnome());
+            porteAgendServ.setText(pets.getporte());
+        } else {
+            petAgendServ.setText("");
+            porteAgendServ.setText("");
+            JOptionPane.showMessageDialog(null, "Pet não encontrado");
+        }
+    }//GEN-LAST:event_buscarPet
+
+    private void codCliAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codCliAgendServActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_codCliAgendServActionPerformed
+
+    private void banhoAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_banhoAgendServActionPerformed
+        // TODO add your handling code here:
+        calcularServicoTotal();
+    }//GEN-LAST:event_banhoAgendServActionPerformed
+
+    private void tosaAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tosaAgendServActionPerformed
+        // TODO add your handling code here:
+        calcularServicoTotal();
+    }//GEN-LAST:event_tosaAgendServActionPerformed
+
+    private void tosa_higAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tosa_higAgendServActionPerformed
+        // TODO add your handling code here:
+        calcularServicoTotal();
+    }//GEN-LAST:event_tosa_higAgendServActionPerformed
+
+    private void escovacaoAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_escovacaoAgendServActionPerformed
+        // TODO add your handling code here:
+        calcularServicoTotal();
+    }//GEN-LAST:event_escovacaoAgendServActionPerformed
+
+    private void unhasAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unhasAgendServActionPerformed
+        // TODO add your handling code here:
+        calcularServicoTotal();
+    }//GEN-LAST:event_unhasAgendServActionPerformed
+
+    private void codPetAgendServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codPetAgendServActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codPetAgendServActionPerformed
+
+    private void cadastrarAgendamento() {
+        String pattern = "yyyy-MM-dd";
+        DateFormat df = new SimpleDateFormat(pattern);        
+        
+        AgendamentosDao agendamentos = new AgendamentosDao();
+        Agendamento_servicosDao agendaServs = new Agendamento_servicosDao();
+
+        Agendamentos agendamento = new Agendamentos();
+        agendamento.setcod_pet(Integer.parseInt(codPetAgendServ.getText()));
+        agendamento.setdata_agendada(df.format(dataAgendServ.getDate()));
+
+        agendamentos.create(agendamento);
+
+        Agendamento_servicos serv = new Agendamento_servicos();
+        serv.setcod_age(agendamento.getcod_age());
+        if (banhoAgendServ.isSelected()) {
+            serv.setcod_serv(1);
+            agendaServs.create(serv);
+        }
+
+        if (tosaAgendServ.isSelected()) {
+            serv.setcod_serv(2);
+            agendaServs.create(serv);
+        }
+
+        if (tosa_higAgendServ.isSelected()) {
+            serv.setcod_serv(3);
+            agendaServs.create(serv);
+        }
+
+        if (escovacaoAgendServ.isSelected()) {
+            serv.setcod_serv(4);
+            agendaServs.create(serv);
+        }
+
+        if (unhasAgendServ.isSelected()) {
+            serv.setcod_serv(5);
+            agendaServs.create(serv);
+        }
+
+        JOptionPane.showMessageDialog(null, "Agendamento cadastrado com sucesso.");
+    }
+
+    private void calcularServicoTotal() {
+        double total = 0.0;
+        Servico_precosDao dao = new Servico_precosDao();
+
+        if (banhoAgendServ.isSelected()) {
+            Servicos_precos banho = dao.getPorPorte(1, porteAgendServ.getText());
+            if (banho != null) {
+                total += banho.getvalor();
+            }
+        }
+
+        if (tosaAgendServ.isSelected()) {
+            Servicos_precos banho = dao.getPorPorte(2, porteAgendServ.getText());
+            if (banho != null) {
+                total += banho.getvalor();
+            }
+        }
+
+        if (tosa_higAgendServ.isSelected()) {
+            Servicos_precos banho = dao.getPorPorte(3, porteAgendServ.getText());
+            if (banho != null) {
+                total += banho.getvalor();
+            }
+        }
+
+        if (escovacaoAgendServ.isSelected()) {
+            Servicos_precos banho = dao.getPorPorte(4, porteAgendServ.getText());
+            if (banho != null) {
+                total += banho.getvalor();
+            }
+        }
+
+        if (unhasAgendServ.isSelected()) {
+            Servicos_precos banho = dao.getPorPorte(5, porteAgendServ.getText());
+            if (banho != null) {
+                total += banho.getvalor();
+            }
+        }
+
+        totalAgendServ.setText(String.valueOf(total));
+    }
 
     /**
      * @param args the command line arguments
@@ -539,7 +791,10 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
     private javax.swing.JCheckBox banhoAgendServ;
     private javax.swing.JButton btnPesquisarAgend;
     private javax.swing.JTextField clienteAgendServ;
+    private javax.swing.JTextField codCliAgendServ;
+    private javax.swing.JTextField codPetAgendServ;
     private javax.swing.JFormattedTextField cpfAgendServ;
+    private com.toedter.calendar.JDateChooser dataAgendServ;
     private javax.swing.JCheckBox escovacaoAgendServ;
     private javax.swing.JFormattedTextField horarioAgendServ;
     private javax.swing.JButton inserirAgendServ;
@@ -560,7 +815,7 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField pesquisaAgend;
     private javax.swing.JTextField petAgendServ;
-    private javax.swing.JComboBox<String> porteAgendServ;
+    private javax.swing.JTextField porteAgendServ;
     private javax.swing.JTable tabelaAgend;
     private javax.swing.JCheckBox tosaAgendServ;
     private javax.swing.JCheckBox tosa_higAgendServ;

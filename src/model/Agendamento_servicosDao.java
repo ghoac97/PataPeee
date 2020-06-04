@@ -20,13 +20,12 @@ public class Agendamento_servicosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            String cmd = "INSERT INTO Agendamento_servicos(cod_age,getcod_serv) values (?,?)";
+            String cmd = "INSERT INTO Agendamento_servicos(cod_age, cod_serv) values (?,?)";
             stmt = con.prepareStatement(cmd.toLowerCase());
             stmt.setInt(1, p.getcod_age());
             stmt.setInt(2, p.getcod_serv());
 
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Inserido.");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);

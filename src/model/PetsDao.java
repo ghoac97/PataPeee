@@ -8,6 +8,7 @@ package model;
 import connection.connectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -82,6 +83,33 @@ public class PetsDao {
         } finally {
             connectionFactory.closeConnection(con, stmt);
         }
+    }
+    
+    public Pets getPorNomeEDono(String nome, int codCli) {
+        Pets pet = null;
+        try {
+            Connection conn = connectionFactory.getConnection();
+            String query = "select * from pets where nome = ? and cod_cli=?";
+            PreparedStatement stmt = conn.prepareStatement(query.toLowerCase());
+            stmt.setString(1, nome);
+            stmt.setInt(2, codCli);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                pet = new Pets();
+                pet.setcod_pet(rs.getInt("cod_pet"));
+                pet.setnome(rs.getString("nome"));
+                pet.setporte(rs.getString("porte"));
+                
+                break;
+            }
+
+            connectionFactory.closeConnection(conn, stmt, rs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao pesquisar pets: " + e.getMessage());
+        }
+
+        return pet;
     }
 
 }

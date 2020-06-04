@@ -8,6 +8,7 @@ package model;
 import connection.connectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,7 +26,7 @@ public class Servico_precosDao {
             stmt.setInt(2, p.getcod_serv());
             stmt.setString(3, p.getporte());
             stmt.setString(4, p.gettempo());
-            stmt.setString(5, p.getvalor());
+            stmt.setDouble(5, p.getvalor());
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Inserido.");
@@ -66,7 +67,7 @@ public class Servico_precosDao {
             stmt.setInt(2, p.getcod_serv());
             stmt.setString(3, p.getporte());
             stmt.setString(4, p.gettempo());
-            stmt.setString(5, p.getvalor());
+            stmt.setDouble(5, p.getvalor());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
 
@@ -75,6 +76,29 @@ public class Servico_precosDao {
         } finally {
             connectionFactory.closeConnection(con, stmt);
         }
+    }
+    
+    public Servicos_precos getPorPorte(Integer cod_serv, String porte){
+        Servicos_precos preco = null;
+        try {
+            Connection conn = connectionFactory.getConnection();
+            
+            String query = "select * from servico_precos where cod_serv=? and porte = ?";
+            PreparedStatement stmt = conn.prepareStatement(query.toLowerCase());
+            stmt.setInt(1, cod_serv);
+            stmt.setString(2, porte);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                preco = new Servicos_precos();
+                preco.setcod_preco(rs.getInt("cod_preco"));
+                preco.setvalor(rs.getDouble("valor"));                
+            }
+            connectionFactory.closeConnection(conn, stmt, rs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
+        }
+        return preco;
     }
 
 }

@@ -94,7 +94,7 @@ public class ClientesDao {
 
     public Clientes getClientePorCPF(String cpf) {
         cpf = cpf.replace(".", "").replace("-", "");
-        Clientes cliente = new Clientes();
+        Clientes cliente = null;
         try {
             Connection conn = connectionFactory.getConnection();
             String query = "select * from clientes where cpf = ?";
@@ -103,6 +103,7 @@ public class ClientesDao {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                cliente = new Clientes();
                 cliente.setcod_cli(rs.getInt("cod_cli"));
                 cliente.setnome(rs.getString("nome"));
                 cliente.setcpf(rs.getString("cpf"));
