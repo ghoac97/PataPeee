@@ -594,9 +594,11 @@ public class Tela04_A2_TabbedServicosAtendimento extends javax.swing.JFrame {
         if (pets != null) {
             petAgendServ.setText(pets.getnome());
             porteAgendServ.setText(pets.getporte());
+            codPetAgendServ.setText(pets.getcod_pet().toString());
         } else {
             petAgendServ.setText("");
             porteAgendServ.setText("");
+            codPetAgendServ.setText("");            
             JOptionPane.showMessageDialog(null, "Pet não encontrado");
         }
     }//GEN-LAST:event_buscarPet
