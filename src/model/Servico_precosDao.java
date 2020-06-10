@@ -9,6 +9,7 @@ import connection.connectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,16 +21,14 @@ public class Servico_precosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            String cmd = "INSERT INTO Servicos_precos(cod_preco,cod_serv,porte,tempo,valor) values (?,?,?,?,?)";
+            String cmd = "INSERT INTO Servico_precos(cod_serv,porte,tempo,valor) values (?,?,?,?)";
             stmt = con.prepareStatement(cmd.toLowerCase());
-            stmt.setInt(1, p.getcod_preco());
-            stmt.setInt(2, p.getcod_serv());
-            stmt.setString(3, p.getporte());
-            stmt.setString(4, p.gettempo());
-            stmt.setDouble(5, p.getvalor());
+            stmt.setInt(1, p.getcod_serv());
+            stmt.setString(2, p.getporte());
+            stmt.setString(3, p.gettempo());
+            stmt.setDouble(4, p.getvalor());
 
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Inserido.");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -42,7 +41,7 @@ public class Servico_precosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            String cmd = "delete from Servicos_precos where cod_serv=?";
+            String cmd = "delete from Servico_precos where cod_serv=?";
             stmt = con.prepareStatement(cmd.toLowerCase());
            
             stmt.setInt(1, p.getcod_serv());
@@ -61,15 +60,13 @@ public class Servico_precosDao {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            String cmd = "update Servicos_precos set cod_preco=?,cod_serv=?,porte=?,tempo=?,valor=? where cod_serv=?";
+            String cmd = "update Servico_precos set porte=?,tempo=?,valor=? where cod_preco=?";
             stmt = con.prepareStatement(cmd.toLowerCase());
-            stmt.setInt(1, p.getcod_preco());
-            stmt.setInt(2, p.getcod_serv());
-            stmt.setString(3, p.getporte());
-            stmt.setString(4, p.gettempo());
-            stmt.setDouble(5, p.getvalor());
+            stmt.setString(1, p.getporte());
+            stmt.setString(2, p.gettempo());
+            stmt.setDouble(3, p.getvalor());
+            stmt.setDouble(4, p.getcod_preco());
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -99,6 +96,31 @@ public class Servico_precosDao {
             JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
         }
         return preco;
+    }
+    
+    public ArrayList<Servicos_precos> getPorServico(Integer cod_serv){
+        ArrayList<Servicos_precos> precos = new ArrayList<>();
+        try {
+            Connection conn = connectionFactory.getConnection();
+            
+            String query = "select * from servico_precos where cod_serv=?";
+            PreparedStatement stmt = conn.prepareStatement(query.toLowerCase());
+            stmt.setInt(1, cod_serv);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Servicos_precos preco = new Servicos_precos();
+                preco.setcod_preco(rs.getInt("cod_preco"));
+                preco.setvalor(rs.getDouble("valor"));
+                preco.setporte(rs.getString("porte"));
+                preco.settempo(rs.getString("tempo"));                
+                precos.add(preco);
+            }
+            connectionFactory.closeConnection(conn, stmt, rs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar preços" + e.getMessage());
+        }
+        return precos;
     }
 
 }

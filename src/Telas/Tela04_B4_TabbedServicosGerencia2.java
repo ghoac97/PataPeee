@@ -5,8 +5,18 @@
  */
 package Telas;
 
+import java.util.ArrayList;
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import model.ComboItem;
+import model.Funcionarios;
+import model.FuncionariosDao;
 import model.Servicos_precos;
 import model.Servico_precosDao;
+import model.Servicos;
+import model.ServicosDao;
+
 /**
  *
  * @author Denise Trevizo (usp)
@@ -18,6 +28,17 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
      */
     public Tela04_B4_TabbedServicosGerencia2() {
         initComponents();
+
+        // Oculta IDS
+        codServ.setVisible(false);
+
+        // Popular Funcionarios
+        FuncionariosDao dao = new FuncionariosDao();
+        ArrayList<Funcionarios> funcs = dao.all();
+
+        for (Funcionarios func : funcs) {
+            funcCadServ.addItem(new ComboItem(func.getcod_func(), func.getnome()));
+        }
     }
 
     /**
@@ -54,17 +75,15 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
         horarioAgendServ = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
         totalAgendServ = new javax.swing.JTextField();
-        porteAgendServ = new javax.swing.JComboBox<>();
+        porteAgendServ = new javax.swing.JComboBox<String>();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaServicosAgend = new javax.swing.JList<>();
+        listaServicosAgend = new javax.swing.JList<String>();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         servicoCadServ = new javax.swing.JTextField();
-        excluirCadServ = new javax.swing.JButton();
         atualizarCadServ = new javax.swing.JButton();
-        inserirCadServ = new javax.swing.JButton();
         voltarCadServ = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
         minPCadServ = new javax.swing.JTextField();
@@ -79,9 +98,10 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
         valorGCadServ = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        funcCadServ = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         obsCadServ = new javax.swing.JTextField();
+        funcCadServ = new javax.swing.JComboBox();
+        codServ = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -287,8 +307,7 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
         });
 
         porteAgendServ.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        porteAgendServ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P", "M", "G" }));
-        porteAgendServ.setOpaque(false);
+        porteAgendServ.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "P", "M", "G" }));
         porteAgendServ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 porteAgendServActionPerformed(evt);
@@ -301,10 +320,10 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
 
         listaServicosAgend.setBackground(new java.awt.Color(239, 230, 244));
         listaServicosAgend.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        listaServicosAgend.setModel(new javax.swing.AbstractListModel<String>() {
+        listaServicosAgend.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Banho", " ", "Tosa", " ", "Tosa higiênica", " ", "Escovação de dentes", " ", "Corte de unhas" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         listaServicosAgend.setOpaque(false);
         jScrollPane1.setViewportView(listaServicosAgend);
@@ -409,21 +428,21 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(67, 1, 101));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Cadastrar Serviços");
+        jLabel6.setText("Cadastro de Serviço");
         jLabel6.setOpaque(true);
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(51, 51, 51));
         jLabel16.setText("Serviço");
 
-        excluirCadServ.setBackground(new java.awt.Color(30, 0, 45));
-        excluirCadServ.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        excluirCadServ.setForeground(new java.awt.Color(255, 255, 255));
-        excluirCadServ.setText("Excluir");
-        excluirCadServ.setBorderPainted(false);
-        excluirCadServ.addActionListener(new java.awt.event.ActionListener() {
+        servicoCadServ.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                servicoCadServFocusLost(evt);
+            }
+        });
+        servicoCadServ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                excluirCadServActionPerformed(evt);
+                servicoCadServActionPerformed(evt);
             }
         });
 
@@ -435,17 +454,6 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
         atualizarCadServ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 atualizarCadServActionPerformed(evt);
-            }
-        });
-
-        inserirCadServ.setBackground(new java.awt.Color(30, 0, 45));
-        inserirCadServ.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        inserirCadServ.setForeground(new java.awt.Color(255, 255, 255));
-        inserirCadServ.setText("Inserir");
-        inserirCadServ.setBorderPainted(false);
-        inserirCadServ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inserirCadServActionPerformed(evt);
             }
         });
 
@@ -540,56 +548,58 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(voltarCadServ)
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel18)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(excluirCadServ)
-                        .addGap(166, 166, 166)
-                        .addComponent(atualizarCadServ)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inserirCadServ))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(servicoCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17)
-                            .addComponent(funcCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel24)
-                                    .addComponent(jLabel28))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23)
-                                    .addComponent(minPCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel26)
-                                    .addComponent(jLabel27))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(minMCadServ, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                                    .addComponent(minGCadServ))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(voltarCadServ)
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel25)
-                            .addComponent(valorGCadServ, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                            .addComponent(valorMCadServ)
-                            .addComponent(valorPCadServ)))
-                    .addComponent(obsCadServ))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel18)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel16)
+                                    .addComponent(servicoCadServ, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                                    .addComponent(jLabel17)
+                                    .addComponent(funcCadServ, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel24)
+                                            .addComponent(jLabel28))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel23)
+                                            .addComponent(minPCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel26)
+                                            .addComponent(jLabel27))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(minMCadServ, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                                            .addComponent(minGCadServ))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel25)
+                                    .addComponent(valorGCadServ, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                                    .addComponent(valorMCadServ)
+                                    .addComponent(valorPCadServ)))
+                            .addComponent(obsCadServ)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(codServ, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(atualizarCadServ)
+                        .addGap(93, 93, 93)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -597,7 +607,8 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(funcCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(funcCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
@@ -617,22 +628,25 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(minGCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27)
-                            .addComponent(valorGCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                            .addComponent(valorGCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, Short.MAX_VALUE)))
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(obsCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(voltarCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(excluirCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inserirCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(atualizarCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(voltarCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(atualizarCadServ, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(codServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Cadastro Serviço", jPanel2);
@@ -657,21 +671,82 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_voltarAgendamentosActionPerformed
 
-    private void excluirCadServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirCadServActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_excluirCadServActionPerformed
 
     private void atualizarCadServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarCadServActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_atualizarCadServActionPerformed
+        ServicosDao servDao = new ServicosDao();
+        Servico_precosDao servPrecosDao = new Servico_precosDao();
 
-    private void inserirCadServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirCadServActionPerformed
-    Servicos_precos Servicos_precos = new Servicos_precos();
-    Servico_precosDao spdao = new Servico_precosDao();
-    
-    Servicos_precos.setcod_serv(Integer.parseInt(servicoCadServ.getText()));
-    
-    }//GEN-LAST:event_inserirCadServActionPerformed
+        Servicos serv = new Servicos();
+        serv.setcod_serv(Integer.parseInt(codServ.getText()));
+        serv.setnome(servicoCadServ.getText());
+        serv.setdescricao(obsCadServ.getText());
+        serv.setcod_fun(getSelectedValue(funcCadServ));
+
+        Servicos_precos p = null;
+        Servicos_precos m = null;
+        Servicos_precos g = null;
+
+        if (!minPCadServ.getText().equals("")) {
+            p = servPrecosDao.getPorPorte(serv.getcod_serv(), "P");
+
+            if (p != null) {
+                p.setcod_serv(serv.getcod_serv());
+                p.setporte("P");
+                p.settempo(minPCadServ.getText());
+                p.setvalor(Double.parseDouble(valorPCadServ.getText()));
+                servPrecosDao.update(p);
+            } else {
+                p = new Servicos_precos();
+                p.setcod_serv(serv.getcod_serv());
+                p.setporte("P");
+                p.settempo(minPCadServ.getText());
+                p.setvalor(Double.parseDouble(valorPCadServ.getText()));
+                servPrecosDao.create(p);
+            }
+
+        }
+        if (!minMCadServ.getText().equals("")) {
+            m = servPrecosDao.getPorPorte(serv.getcod_serv(), "M");
+
+            if (m != null) {
+                m.setcod_serv(serv.getcod_serv());
+                m.setporte("M");
+                m.settempo(minMCadServ.getText());
+                m.setvalor(Double.parseDouble(valorMCadServ.getText()));
+                servPrecosDao.update(m);
+            } else {
+                m = new Servicos_precos();
+                m.setcod_serv(serv.getcod_serv());
+                m.setporte("M");
+                m.settempo(minMCadServ.getText());
+                m.setvalor(Double.parseDouble(valorMCadServ.getText()));
+                servPrecosDao.create(m);
+            }
+
+        }
+        if (!minGCadServ.getText().equals("")) {
+            g = servPrecosDao.getPorPorte(serv.getcod_serv(), "G");
+
+            if (g != null) {
+                g.setcod_serv(serv.getcod_serv());
+                g.setporte("G");
+                g.settempo(minGCadServ.getText());
+                g.setvalor(Double.parseDouble(valorGCadServ.getText()));
+                servPrecosDao.update(g);
+            } else {
+                g = new Servicos_precos();
+                g.setcod_serv(serv.getcod_serv());
+                g.setporte("G");
+                g.settempo(minGCadServ.getText());
+                g.setvalor(Double.parseDouble(valorGCadServ.getText()));
+                servPrecosDao.create(g);
+            }
+        }
+
+        servDao.update(serv);
+        JOptionPane.showMessageDialog(null, "Serviço salvo com sucesso.");
+    }//GEN-LAST:event_atualizarCadServActionPerformed
 
     private void voltarCadServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarCadServActionPerformed
         Tela03_B_HomeGerencia telaHomeGerencia = new Tela03_B_HomeGerencia();
@@ -728,6 +803,84 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
     private void btnPesquisarAgendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarAgendActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPesquisarAgendActionPerformed
+
+    private void servicoCadServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicoCadServActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_servicoCadServActionPerformed
+
+    private void servicoCadServFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_servicoCadServFocusLost
+        // TODO add your handling code here:
+        ServicosDao servDao = new ServicosDao();
+        Servico_precosDao servPrecosDao = new Servico_precosDao();
+
+        Servicos serv = servDao.getPorNome(servicoCadServ.getText());
+        if (serv == null) {
+            JOptionPane.showMessageDialog(null, "Serviço não encontrado.");
+            limparCampos();
+            return;
+        }
+
+        // Preenche serviço
+        limparCampos();
+        servicoCadServ.setText(serv.getnome());
+        obsCadServ.setText(serv.getdescricao());
+        codServ.setText(Integer.toString(serv.getcod_serv()));
+
+        if (serv.getcod_fun() > 0) {
+            setSelectedValue(funcCadServ, serv.getcod_fun());
+        }
+
+        // Preenche preços
+        ArrayList<Servicos_precos> precos = servPrecosDao.getPorServico(serv.getcod_serv());
+        if (precos.size() > 0) {
+            for (Servicos_precos preco : precos) {
+                if (preco.getporte().equals("P")) {
+                    minPCadServ.setText(preco.gettempo());
+                    valorPCadServ.setText(Double.toString(preco.getvalor()));
+                }
+
+                if (preco.getporte().equals("M")) {
+                    minMCadServ.setText(preco.gettempo());
+                    valorMCadServ.setText(Double.toString(preco.getvalor()));
+                }
+
+                if (preco.getporte().equals("G")) {
+                    minGCadServ.setText(preco.gettempo());
+                    valorGCadServ.setText(Double.toString(preco.getvalor()));
+                }
+            }
+        }
+
+    }//GEN-LAST:event_servicoCadServFocusLost
+
+    private void limparCampos() {
+        servicoCadServ.setText("");
+        obsCadServ.setText("");
+        codServ.setText("");
+
+        minPCadServ.setText("");
+        valorPCadServ.setText("");
+        minMCadServ.setText("");
+        valorMCadServ.setText("");
+        minGCadServ.setText("");
+        valorGCadServ.setText("");
+    }
+
+    private static void setSelectedValue(JComboBox comboBox, int value) {
+        ComboItem item;
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            item = (ComboItem) comboBox.getItemAt(i);
+            if (item.Chave == value) {
+                comboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+
+    private static int getSelectedValue(JComboBox comboBox) {
+        ComboItem item = (ComboItem) comboBox.getSelectedItem();
+        return item.Chave;
+    }
 
     /**
      * @param args the command line arguments
@@ -800,12 +953,11 @@ public class Tela04_B4_TabbedServicosGerencia2 extends javax.swing.JFrame {
     private javax.swing.JButton atualizarCadServ;
     private javax.swing.JButton btnPesquisarAgend;
     private javax.swing.JTextField clienteAgendServ;
+    private javax.swing.JTextField codServ;
     private javax.swing.JFormattedTextField cpfAgendServ;
-    private javax.swing.JButton excluirCadServ;
-    private javax.swing.JTextField funcCadServ;
+    private javax.swing.JComboBox funcCadServ;
     private javax.swing.JFormattedTextField horarioAgendServ;
     private javax.swing.JButton inserirAgendServ;
-    private javax.swing.JButton inserirCadServ;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

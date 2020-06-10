@@ -177,5 +177,55 @@ public class FuncionariosDao {
         }
         return funcionarios;
     }
+    
+    public ArrayList<Funcionarios> all() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Funcionarios> funcionarios = new ArrayList<Funcionarios>();
+        try {
+            conn = connectionFactory.getConnection();
+            stmt = conn.prepareStatement("select * from Funcionarios order by nome".toLowerCase());
+            
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Funcionarios funcionario = new Funcionarios();
+                funcionario.setcod_func(rs.getInt("cod_func"));
+                funcionario.setnome(rs.getString("nome"));
+                funcionario.setcpf(rs.getString("cpf"));
+                funcionario.setrg(rs.getString("rg"));
+                funcionario.setdata_nascimento(rs.getString("data_nacimento"));
+                funcionario.setnome_pai(rs.getString("nome_pai"));
+                funcionario.setnome_mae(rs.getString("nome_mae"));
+                funcionario.setestado_civil(rs.getString("estado_civil"));
+                funcionario.settitulo_eleitor(rs.getString("titulo_eleitor"));
+                funcionario.setnacionalidade(rs.getString("nacionalidade"));
+                funcionario.setnaturalidade(rs.getString("naturalidade"));
+                funcionario.setuf_n(rs.getString("uf_n"));
+                funcionario.setcam(rs.getInt("cam"));
+                funcionario.settelefone(rs.getString("telefone"));
+                funcionario.setcelular(rs.getString("celular"));
+                funcionario.setendereco(rs.getString("endereco"));
+                funcionario.setcidade(rs.getString("cidade"));                
+                funcionario.setbairro(rs.getString("bairro"));
+                funcionario.setcep(rs.getString("cep"));
+                funcionario.setuf(rs.getString("uf"));
+                funcionario.setemail(rs.getString("email"));
+                funcionario.setpis_pasep(rs.getString("pis_pasep"));
+                funcionario.setctps(rs.getString("ctps"));
+                funcionario.setuf_c(rs.getString("uf_c"));
+                funcionario.setcargo(rs.getString("cargo"));
+                funcionario.setdata_admissao(rs.getString("data_admissao"));
+                funcionario.setremuneracao(rs.getInt("remuneracao"));
+                funcionario.sethorario_trabalho(rs.getInt("horario_trabalho"));
+                funcionarios.add(funcionario);
+            }
+            
+            connectionFactory.closeConnection(conn, stmt, rs);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar contatos" + e.getMessage());
+        }
+        return funcionarios;
+    }
 
 }
